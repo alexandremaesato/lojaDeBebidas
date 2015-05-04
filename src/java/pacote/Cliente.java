@@ -1,3 +1,8 @@
+package pacote;
+
+
+import java.io.Serializable;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,15 +13,15 @@
  *
  * @author Alexandre
  */
-public class Cliente {
-    String nome;
-    String login;
-    String senha;
-    String cpf;
-    String email;
-    String telefone;
-    String celular;
-    Boolean status;
+public class Cliente implements Serializable {
+    private String nome;
+    private String login;
+    private String senha;
+    private String cpf;
+    private String email;
+    private String telefone;
+    private String celular;
+    private Boolean status;
 
     public Cliente() {
     }
