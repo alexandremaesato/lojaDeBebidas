@@ -24,7 +24,7 @@
         <c:otherwise>
             <form action="servletLogar" method=POST>  
                 Nome:     <input type=text name=nome /><br/>
-                <input type=submit name=Ok /><br/>
+                <input type="submit" value="Ok" /><br/>
                 <a href="Cadastrar.jsp">Cadastrar</a>
             </form>
        </c:otherwise>    
