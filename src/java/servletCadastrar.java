@@ -44,7 +44,7 @@ public class servletCadastrar extends HttpServlet {
             cliente.setTelefone(request.getParameter("telefone"));
             cliente.setCelular(request.getParameter("celular"));
             cliente.setStatus(true);
-            
+            //jhfjvck
             // FAZER Conexao DAO passando cliente
             
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/servletLogar");
