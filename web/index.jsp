@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Tools Shop</title>
+<title>Adega Dos Deuses</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" href="iecss.css" />
@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
 <div id="main_container">
     <c:import url="header.jsp" />
   <div id="main_content">
@@ -20,10 +19,11 @@
       <c:import url="menuTop.jsp" />
     </div>
     <!-- end of menu tab -->
-    <div class="crumb_navigation"> Navegação: <span class="current">Home</span> </div>
+    <div class="crumb_navigation">Navegação: <span class="current">Home</span> </div>
     <c:import url="leftContent.jsp" />
     <!-- end of left content -->
     <c:import url="centerContent.jsp" />
+    
     <!-- end of center content -->
     <c:import url="rightContent.jsp" />
     <!-- end of right content -->

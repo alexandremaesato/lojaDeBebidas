@@ -7,6 +7,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <div class="center_content">
+
+<h2>Ordernar por: 
+							
+							<SELECT NAME = "produto">
+							<OPTION>ordem alfabética ascendente
+							<OPTION>ordem alfabética descendente
+<OPTION>preço ascendente
+							<OPTION>preço descendente
+							</SELECT></h2>
+							</br></br>	
+  <!-- Start of Main Content Area -->
   <div id="main_content">
    
     <div class="h_divider">&nbsp;</div>
@@ -59,4 +70,4 @@
 
 
 </div>
-</div>
+  </div>
