@@ -20,7 +20,7 @@
       <c:import url="menuTop.jsp" />
     </div>
     <!-- end of menu tab -->
-    <div class="crumb_navigation"> Navigation: <span class="current">Home</span> </div>
+    <div class="crumb_navigation"> Navegação: <span class="current">Home</span> </div>
     <c:import url="leftContent.jsp" />
     <!-- end of left content -->
     <c:import url="centerContent.jsp" />
