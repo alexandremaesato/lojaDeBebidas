@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author Alexandre
  */
 public class Endereco implements Serializable{
+    private int idEndereco;
     private String endereco;
     private String numero;
     private String complemento;

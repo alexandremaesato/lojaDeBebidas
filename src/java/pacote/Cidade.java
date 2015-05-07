@@ -13,20 +13,19 @@ import java.util.List;
  * @author Alexandre
  */
 public class Cidade implements Serializable{
-    private List<String> cidade;
+    private int idCidade;
+    private String cidade;
     private Boolean status;
 
     public Cidade() {
     }
 
-    public List<String> getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
     public void setCidade(String cidade) {
-        if( !this.cidade.contains(cidade)){
-            this.cidade.add(cidade);
-        }
+        this.cidade = cidade;
     }
 
    

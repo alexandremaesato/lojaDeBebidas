@@ -1,21 +1,37 @@
-<%-- 
-    Document   : index
-    Created on : May 1, 2015, 1:09:54 PM
-    Author     : Alexandre
---%>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Tela Principal</h1>
-        <c:import url="Login.jsp" />
-        
-        
-        
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Tools Shop</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" href="iecss.css" />
+<![endif]-->
+<script type="text/javascript" src="js/boxOver.js"></script>
+</head>
+
+<body>
+
+<div id="main_container">
+    <c:import url="header.jsp" />
+  <div id="main_content">
+    <div id="menu_tab">
+      <c:import url="menuTop.jsp" />
+    </div>
+    <!-- end of menu tab -->
+    <div class="crumb_navigation"> Navigation: <span class="current">Home</span> </div>
+    <c:import url="leftContent.jsp" />
+    <!-- end of left content -->
+    <c:import url="centerContent.jsp" />
+    <!-- end of center content -->
+    <c:import url="rightContent.jsp" />
+    <!-- end of right content -->
+  </div>
+  <!-- end of main content -->
+  <c:import url="footer.jsp" />
+</div>
+<!-- end of main_container -->
+
+</body>
 </html>
