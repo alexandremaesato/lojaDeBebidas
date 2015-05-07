@@ -23,8 +23,8 @@
        
         <c:otherwise>
             <form action="servletLogar" method=POST>  
-                Login:  <input type=text name=nome  /><br/>
-                Senha:   <input type=text name=nome /><br/>
+                Login:  <input type=text size="12" name=nome  /><br/>
+                Senha:   <input type=text size="12" name=nome /><br/>
                 <input type="submit" value="Ok" /><br/>
                 <a href="Cadastrar.jsp">Cadastrar</a>
             </form>
