@@ -2,6 +2,8 @@ package pacote;
 
 
 import java.io.Serializable;
+import java.sql.Time;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,19 +16,24 @@ import java.io.Serializable;
  * @author Alexandre
  */
 public class Cliente implements Serializable {
+    private int idCliente;
     private String nome;
     private String login;
     private String senha;
+    private Time dataNascimento; 
+    private String sexo;
     private String cpf;
+    private Endereco endereco;
     private String email;
     private String telefone;
     private String celular;
     private Boolean status;
+    private Carrinho carrinho;
 
     public Cliente() {
     }
     
-    
+   
 
     public String getNome() {
         return nome;
@@ -91,6 +98,25 @@ public class Cliente implements Serializable {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+    public Time getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Time dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
     
+    public void setEndereco(Endereco endereco){
+        this.endereco = endereco;
+    }
     
 }

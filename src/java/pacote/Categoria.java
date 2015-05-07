@@ -13,6 +13,7 @@ import java.util.List;
  * @author Alexandre
  */
 public class Categoria implements Serializable{
+    private int idCategoria;
     private List<String> categorias;
     private int status;
 

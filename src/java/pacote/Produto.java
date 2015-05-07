@@ -6,6 +6,7 @@
 package pacote;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Produto implements Serializable {
     private int status;
     private Categoria categoria;
     private Estoque estoque;
+    private List<Imagem> imagens;
 
     public Produto() {
     }

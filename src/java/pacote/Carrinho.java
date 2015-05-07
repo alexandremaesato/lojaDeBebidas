@@ -17,6 +17,7 @@ import java.util.List;
  * @author Alexandre
  */
 public class Carrinho implements Serializable{
+    private int idCarrinho;
     private Time dataPedido;
     private List<Produto> produtos;
 

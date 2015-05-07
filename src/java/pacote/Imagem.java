@@ -13,6 +13,7 @@ import java.io.Serializable;
  * @author Alexandre
  */
 public class Imagem implements Serializable {
+    private int idImagem;
     private Image foto;
     private Image miniatura;
 

@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author Alexandre
  */
 public class Estoque implements Serializable {
+    private int idEstoque;
     private int quantidade;
     private int utilizados;
     private float valor;
