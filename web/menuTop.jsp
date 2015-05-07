@@ -14,6 +14,6 @@
         <li class="divider"></li>
         <li><a href="contact.html" class="nav">Relatórios</a></li>
         <li class="divider"></li>
-        <li><a href="details.html" class="nav">Ajuda</a></li>
+        <li><a href="details.html" class="nav">AJUDAA</a></li>
       </ul>
    
