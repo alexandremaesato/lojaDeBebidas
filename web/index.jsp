@@ -22,7 +22,36 @@
     <div class="crumb_navigation">Navegação: <span class="current">Home</span> </div>
     <c:import url="leftContent.jsp" />
     <!-- end of left content -->
-    <c:import url="centerContent.jsp" />
+   
+    
+    <c:choose>
+       <%--
+       <c:when test="${sessionScope.redir eq produtos}">
+            <c:import url="produtos.jsp" />
+       </c:when>
+        
+        <c:otherwise>
+            <c:import url="centerContent.jsp" />
+        </c:otherwise>
+         --%>
+        <c:when test="${sessionScope.redir eq 'produtos'}">
+            <c:import url="produtos.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'home'}">
+            <c:import url="centerContent.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'loja'}">
+            <c:import url="#.jsp" />
+       </c:when>
+         <c:when test="${sessionScope.redir eq 'busca'}">
+            <c:import url="#.jsp" />
+       </c:when>
+         <c:otherwise>
+             <c:import url="centerContent.jsp" />
+        </c:otherwise>
+       
+        
+   </c:choose>
     
     <!-- end of center content -->
     <c:import url="rightContent.jsp" />

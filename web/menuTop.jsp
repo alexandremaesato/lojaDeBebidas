@@ -1,6 +1,6 @@
 
       <ul class="menu">
-        <li><a href="#" class="nav"> Home </a></li>
+        <li><a href="redir_home.jsp" class="nav"> Home </a></li>
         <li class="divider"></li>
         <li><a href="#" class="nav">Nossa Loja</a></li>
         <li class="divider"></li>
