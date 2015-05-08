@@ -41,7 +41,7 @@
             <c:import url="centerContent.jsp" />
        </c:when>
         <c:when test="${sessionScope.redir eq 'loja'}">
-            <c:import url="#.jsp" />
+            <c:import url="quemsomos.jsp" />
        </c:when>
          <c:when test="${sessionScope.redir eq 'busca'}">
             <c:import url="#.jsp" />

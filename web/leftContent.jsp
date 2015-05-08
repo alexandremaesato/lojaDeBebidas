@@ -14,9 +14,7 @@
         <li class="odd"><a href="#">Iogurtes</a></li>
         <li class="even"><a href="#">Sucos</a></li>
         <li class="odd"><a href="#">Refrigerantes</a></li>
-        <li class="even"><a href="#">...</a></li>
-        <li class="odd"><a href="#">...</a></li>
-        <li class="even"><a href="#">...</a></li>
+       
       </ul>
       
       
