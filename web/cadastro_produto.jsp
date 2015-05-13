@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<div class="center_content">
 		<table border=0 style="margin:30; margin-top:30" >
 			<tr>
 				<td>
@@ -54,3 +54,4 @@
 				</td>
 			</tr>		
 		</table>
+</div>

@@ -32,17 +32,21 @@ public class servletLogar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+       // response.setContentType("text/html;charset=UTF-8");
+        
             
             //Antes fazer conexao DAO e verificar login e senha
             
             HttpSession session = request.getSession();
             String nome = request.getParameter("nome");
             session.setAttribute("nome", nome);
+
+            //isso é so um teste:
+            String tipo = "2";//pegar do bd o tipo de user(1=cli, 2= admin, 3=gerente)
+            session.setAttribute("tipo", tipo);
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request,response);
-        }
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

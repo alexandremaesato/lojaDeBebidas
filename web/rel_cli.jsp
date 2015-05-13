@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<div class="center_content">
 <br />
 					<a href="rel_cli.jsp"> Relatório de Cliente</a>&nbsp;
 					<a href="rel_produtos.jsp"> Relatório de Produtos</a>&nbsp;
@@ -36,4 +37,4 @@
 					</tr>
 					</table>
 					
-
+</div>

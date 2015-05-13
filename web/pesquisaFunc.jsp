@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<div class="center_content">
 		</br></br>
 				<h4>CPF: <input type="number" name="cpf" size="12">     Palavra chave: <input type="text" name="palavra" size="15"> <input type="submit" value="Pesquisar"></h4>
 					<br /><br />
@@ -56,4 +56,4 @@
 					<input type="submit" value="CadastrarAlterar Funcionário">
 					
 					<input type="submit" value="Remover">
-
+</div>

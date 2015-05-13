@@ -14,15 +14,15 @@
         <li class="divider"></li>
         <li><a href="redirect_prod.jsp" class="nav">Produtos</a></li>
         <li class="divider"></li>
-        <li><a href="#" class="nav">Busca Clientes</a></li>
+        <li><a href="redir_busca.jsp" class="nav">Busca Clientes</a></li>
         <li class="divider"></li>
-         <li><a href="#" class="nav">Cadastro de Categoria</a></li>
+         <li><a href="redir_cadastroCateg.jsp" class="nav">Cadastro de Categoria</a></li>
         <li class="divider"></li>
-         <li><a href="#" class="nav">Cadastro de Produto</a></li>
+         <li><a href="redir_cadastroProd.jsp" class="nav">Cadastro de Produto</a></li>
         <li class="divider"></li>
-         <li><a href="#" class="nav">Editar Funcionários</a></li>
+         <li><a href="redir_editorFunc.jsp" class="nav">Editar Funcionários</a></li>
         <li class="divider"></li>
-         <li><a href="#" class="nav">Relatórios</a></li>
+         <li><a href="redir_relatorios.jsp" class="nav">Relatórios</a></li>
         <li class="divider"></li>
          <li><a href="#" class="nav">Ajuda</a></li>
         <li class="divider"></li>

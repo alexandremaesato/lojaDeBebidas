@@ -17,7 +17,9 @@
        
        <c:when test="${not empty sessionScope.nome}">
            ${sessionScope.nome}</br>
-            <a href="<%session.invalidate();%>">Deslogar</a>
+            <form action="servletDeslogar" method=POST>  
+                     <input type="submit" value="Deslogar" /><br/>
+            </form>
        </c:when>
        
        

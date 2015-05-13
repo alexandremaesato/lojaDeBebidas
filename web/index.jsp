@@ -16,7 +16,17 @@
     <c:import url="header.jsp" />
   <div id="main_content">
     <div id="menu_tab">
-      <c:import url="menuTop.jsp" />
+         <c:choose>
+        <c:when test="${sessionScope.tipo eq '3'}">
+      <c:import url="menuTopGer.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.tipo eq '2'}">
+      <c:import url="menuTopAdm.jsp" />
+       </c:when>
+        <c:otherwise>
+                  <c:import url="menuTop.jsp" />
+                  </c:otherwise>
+      </c:choose>
     </div>
     <!-- end of menu tab -->
     <div class="crumb_navigation">Navegação: <span class="current">Home</span> </div>
@@ -43,8 +53,23 @@
         <c:when test="${sessionScope.redir eq 'loja'}">
             <c:import url="quemsomos.jsp" />
        </c:when>
-         <c:when test="${sessionScope.redir eq 'busca'}">
+         <c:when test="${sessionScope.redir eq 'ajuda'}">
             <c:import url="#.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'busca'}">
+            <c:import url="pesquisacli.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'cadastrocate'}">
+            <c:import url="cadastro_categoria.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'cadastroprod'}">
+            <c:import url="cadastro_produto.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'editarFun'}">
+            <c:import url="pesquisaFunc.jsp" />
+       </c:when>
+        <c:when test="${sessionScope.redir eq 'relatorios'}">
+            <c:import url="rel_cli.jsp" />
        </c:when>
          <c:otherwise>
              <c:import url="centerContent.jsp" />
