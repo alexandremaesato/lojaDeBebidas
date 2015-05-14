@@ -36,13 +36,7 @@
     
     <c:choose>
        <%--
-       <c:when test="${sessionScope.redir eq produtos}">
-            <c:import url="produtos.jsp" />
-       </c:when>
-        
-        <c:otherwise>
-            <c:import url="centerContent.jsp" />
-        </c:otherwise>
+       ...
          --%>
         <c:when test="${sessionScope.redir eq 'produtos'}">
             <c:import url="produtos.jsp" />
@@ -70,6 +64,15 @@
        </c:when>
         <c:when test="${sessionScope.redir eq 'relatorios'}">
             <c:import url="rel_cli.jsp" />
+       </c:when>
+         <c:when test="${sessionScope.redir eq 'relat5cli'}">
+            <c:import url="rel_5cli.jsp" />
+       </c:when>
+         <c:when test="${sessionScope.redir eq 'relatFaturamento'}">
+            <c:import url="rel_faturamento.jsp" />
+       </c:when>
+         <c:when test="${sessionScope.redir eq 'relatProdutos'}">
+            <c:import url="rel_produtos.jsp" />
        </c:when>
          <c:otherwise>
              <c:import url="centerContent.jsp" />

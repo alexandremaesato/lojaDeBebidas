@@ -23,8 +23,9 @@
          <li><a href="redir_editorFunc.jsp" class="nav">Editar Funcionários</a></li>
         <li class="divider"></li>
          <li><a href="redir_relatorios.jsp" class="nav">Relatórios</a></li>
-        <li class="divider"></li>
-         <li><a href="#" class="nav">Ajuda</a></li>
+        <li class="divider"></li>      
+        
+        <li><a href="#" class="nav">Ajuda</a></li>
         <li class="divider"></li>
       </ul>
    

@@ -6,11 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<div class="center_content">
 <br />
-					<a href="rel_cli.jsp"> Relatório de Cliente</a>&nbsp;
-					<a href="rel_produtos.jsp"> Relatório de Produtos</a>&nbsp;
-					<a href="rel_faturamento.jsp"> Faturamento da loja</a>&nbsp;
-					<a href="rel_5cli.jsp"> Clientes que mais compraram</a>
+					<a href="redir_relatorios.jsp"> Relatório de Cliente</a>&nbsp;
+					<a href="redir_produtos.jsp"> Relatório de Produtos</a>&nbsp;
+					<a href="redir_faturamento.jsp"> Faturamento da loja</a>&nbsp;
+					<a href="redir_cli5.jsp"> Clientes que mais compraram</a>
 					<br /><br />
 <h3>Faturamento mensal e anual da loja:</h3><br/>
 					<table>
@@ -52,4 +53,4 @@
 					</tr>
 					</table>
 					<br />
-					
+	</div>				

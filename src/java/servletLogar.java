@@ -42,7 +42,7 @@ public class servletLogar extends HttpServlet {
             session.setAttribute("nome", nome);
 
             //isso é so um teste:
-            String tipo = "2";//pegar do bd o tipo de user(1=cli, 2= admin, 3=gerente)
+            String tipo = "3";//pegar do bd o tipo de user(1=cli, 2= admin, 3=gerente)
             session.setAttribute("tipo", tipo);
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request,response);
