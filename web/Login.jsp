@@ -28,7 +28,7 @@
                 Login:  <input type=text size="12" name=nome  /><br/>
                 Senha:   <input type=text size="12" name=nome /><br/>
                 <input type="submit" value="Ok" /><br/>
-                <a href="Cadastrar.jsp">Cadastrar</a>
+                <a href="redir_cadastrar.jsp">Cadastrar</a>
             </form>
        </c:otherwise>    
 

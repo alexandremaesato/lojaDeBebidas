@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Dao.DaoCliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -32,6 +33,7 @@ public class servletCadastrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
@@ -44,11 +46,17 @@ public class servletCadastrar extends HttpServlet {
             cliente.setTelefone(request.getParameter("telefone"));
             cliente.setCelular(request.getParameter("celular"));
             cliente.setStatus(true);
-            //jhfjvck
+         
             // FAZER Conexao DAO passando cliente
+            DaoCliente DaoCli= new DaoCliente();
+            DaoCli.add(cliente);
             
+            //if(inseriu de boa){
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/servletLogar");
             rd.forward(request,response);
+            //}else{
+            
+            //}
         }
     }
 

@@ -3,21 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
-
-import java.sql.*;
 
 /**
  *
- * @author Alexandre
+ * @author Ina
  */
+package Dao;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+ 
 public class ConnectionFactory {
-    public Connection getConnection() {
+    //static reference to itself
+    private static ConnectionFactory instance = new ConnectionFactory();
+     
+    //private constructor
+    private ConnectionFactory() {
         try {
-            return DriverManager.getConnection(
-          "jdbc:mysql://localhost", "root", "");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+    }
+     
+    private Connection createConnection() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/bancoDados?useUnicode=true&characterEncoding=UTF-8", "root", "senha");
+        } catch (SQLException e) {
+            System.out.println("ERROR: Unable to Connect to Database.");
+        }
+        return connection;
+    }   
+     
+    public static Connection getConnection() {
+        return instance.createConnection();
     }
 }

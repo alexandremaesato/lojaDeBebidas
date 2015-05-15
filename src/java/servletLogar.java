@@ -5,7 +5,6 @@
  */
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,14 +32,14 @@ public class servletLogar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        // response.setContentType("text/html;charset=UTF-8");
-        
+        request.setCharacterEncoding("UTF-8");
             
             //Antes fazer conexao DAO e verificar login e senha
             
             HttpSession session = request.getSession();
             String nome = request.getParameter("nome");
             session.setAttribute("nome", nome);
-
+session.setAttribute("redir", "home");//se tiver vendo sessão cadastrar, mas daí loga, sai dessa página e vai pra home
             //isso é so um teste:
             String tipo = "3";//pegar do bd o tipo de user(1=cli, 2= admin, 3=gerente)
             session.setAttribute("tipo", tipo);

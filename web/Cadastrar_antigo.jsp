@@ -1,14 +1,28 @@
 <%-- 
     Document   : Cadastrar
-    Created on : May 15, 2015, 10:52:50 AM
-    Author     : hednisk
+    Created on : May 4, 2015, 11:03:21 AM
+    Author     : Alexandre
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<div class="center_content">
 
- <table>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <script src="funcoes.js"></script>
+            <title>Loja de Bebidas</title>	
+            <link rel="stylesheet" href="nome.css">
+            <script src="jquery.js"></script>
+            <script src="jquery-ui.js"></script>
+            <script>
+                    $(function() {
+                    $( "#datepicker" ).datepicker();
+                    });
+            </script>
+    </head>
+    <body>
+        <table>
             <h1>Cadastrar</h1>
             <form action="servletCadastrar" method="POST" onsubmit="return validacadastroentrada(this);" >  
                 <tr><td>Nome: <input type="text" name="nome" value=""/></td></tr>
@@ -28,4 +42,5 @@
                 <tr><td><input type="submit" value="Ok"></td></tr>
             </form>
         </table>
-</div>
+    </body>
+</html>
