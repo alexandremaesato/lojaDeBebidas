@@ -16,9 +16,9 @@
                 <tr><td>Senha:<input type="text" name="senha" value=""/></td></tr>
                 <tr><td>Data Nascimento: </td><td><input id="datepicker" type="date" name="data" size="15"></td></tr>
                 <tr><td>Sexo:</td><td>
-                    <SELECT NAME = "sexo">
-                    <OPTION>feminino
-                    <OPTION>masculino
+                    <SELECT NAME = "sexo" value="feminino">
+                    <OPTION value='f'>feminino
+                    <OPTION value='f'>masculino
                     </SELECT>
                     </td></tr>
                 <tr><td>CPF:<input type="text" name="cpf" value=""/></td></tr>

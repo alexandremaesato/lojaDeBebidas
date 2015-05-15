@@ -39,10 +39,12 @@ public class servletLogar extends HttpServlet {
             HttpSession session = request.getSession();
             String nome = request.getParameter("nome");
             session.setAttribute("nome", nome);
-session.setAttribute("redir", "home");//se tiver vendo sessão cadastrar, mas daí loga, sai dessa página e vai pra home
+            session.setAttribute("redir", "home");//se tiver vendo sessão cadastrar, mas daí loga, sai dessa página e vai pra home
+            
             //isso é so um teste:
             String tipo = "3";//pegar do bd o tipo de user(1=cli, 2= admin, 3=gerente)
             session.setAttribute("tipo", tipo);
+            
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request,response);
        
