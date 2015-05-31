@@ -8,30 +8,24 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-       <%-- Verificar se esta logado --%>
        
-       <jsp:useBean id="cliente" class="pacote.Cliente" scope="session"/>
-     
+       <%-- Verificar se esta logado --%>
+    <jsp:useBean id="cliente" class="pacote.Cliente" scope="session"/>
     
     <c:choose>
-       
-       <c:when test="${not empty sessionScope.nome}">
+        <c:when test="${not empty sessionScope.nome}">
            ${sessionScope.nome}</br>
-            <form action="servletDeslogar" method=POST>  
-                     <input type="submit" value="Deslogar" /><br/>
-            </form>
-       </c:when>
-       
-       
+            <a href="logout.jsp">Deslogar</a>
+        </c:when>
         <c:otherwise>
-            <form action="servletLogar" method=POST>  
-                Login:  <input type=text size="12" name=nome  /><br/>
-                Senha:   <input type=text size="12" name=nome /><br/>
-                <input type="submit" value="Ok" /><br/>
-                <a href="redir_cadastrar.jsp">Cadastrar</a>
+            <form action="servletLogar?action=logar" method=POST>  
+                Login:  <input type=text name=login  /><br/>
+                Senha:   <input type=password name=senha /><br/>
+                <input class="botao" type="submit" value="Ok" /><br/>
+                <c:set var="centerContent" value="${body.centerContent('cadastrar')}" /><br/>
+                <input class="botao" type="submit" formmethod="post" formaction="servletLogar?action=cadastrar" value="Cadastrar">     
             </form>
        </c:otherwise>    
-
     </c:choose>
        
       

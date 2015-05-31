@@ -38,7 +38,7 @@ public class DaoCliente {
    public void add(Cliente cli) {
 		try {
 			String query = "INSERT INTO Cliente(nome, login, senha, cpf, email, telefone, celular, status) VALUES(?,?,?,?,?,?,?,?)";
-			con = ConnectionFactory.getConnection();
+			con = ConnectionFactoryIna.getConnection();
 			ptmt = con.prepareStatement(query);
 			//ptmt.setInt(1, cli.getRollNo());
                         ptmt.setString(1, cli.getNome());

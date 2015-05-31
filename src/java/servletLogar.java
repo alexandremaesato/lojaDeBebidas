@@ -5,6 +5,14 @@
  */
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +20,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static javax.xml.bind.DatatypeConverter.parseInt;
+
+import pacote.*;
+import Dao.*;
 
 /**
  *
@@ -31,24 +43,146 @@ public class servletLogar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        
+        String action = request.getParameter("action");
+        
+        if ("logar".equals(action)){
+            try (PrintWriter out = response.getWriter()) {
+                out.println("1");    
+                //Antes fazer conexao DAO e verificar login e senha
+                ClienteDao1 clienteDao = new ClienteDao1();
+                Cliente cliente = new Cliente();
+                Cliente clienteLogin = new Cliente();
+
+                String login = request.getParameter("login");
+
+                //String senha = request.getParameter("senha");
+                
+                clienteLogin.setSenha(request.getParameter("senha"));
+                cliente = clienteDao.getCliente(login);
+                
+                if(clienteDao.verificaCliente(login, clienteLogin.getSenha())){
+                    out.println("2");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("nome", login);
+                    session.setAttribute("tipo", login);// linha de teste
+                    RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
+                    rd.forward(request,response);
+                    out.flush();
+                    }else{
+                
+                processaErro(request, response,"Não foi possivel logar!</br>Erro de Login ou Senha.");
+                }
+                /*
+                out.println("passou 74");
+                request.setAttribute("mensagem", "Não foi possivel logar!</br>Erro de Login ou Senha.");
+                RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp");
+                rd.forward(request,response);
+                */
+                
+                
+
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        
+        
+        if ("cadastrar".equals(action)){
+            PrintWriter out = response.getWriter();
+            out.println("foi");
+            CidadeDao cidadeDao = new CidadeDao();
+            try {
+                request.setAttribute("cidades", cidadeDao.getNomeCidades());
+            } catch (SQLException ex) {
+                Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+                
+            }
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/cadastrar.jsp");
+            rd.forward(request, response);    
+        }
+        
+        
+        if("gravar".equals(action)){
+            try (PrintWriter out = response.getWriter()) {
             
-            //Antes fazer conexao DAO e verificar login e senha
+            Cliente cliente = new Cliente();
+            CidadeDao cidadeDao = new CidadeDao();
+            Cidade cidade = new Cidade();
+            CarrinhoDao carrinhoDao = new CarrinhoDao();
             
-            HttpSession session = request.getSession();
-            String nome = request.getParameter("nome");
-            session.setAttribute("nome", nome);
-            session.setAttribute("redir", "home");//se tiver vendo sessão cadastrar, mas daí loga, sai dessa página e vai pra home
+            Endereco endereco = new Endereco();
+            EnderecoDao enderecoDao = new EnderecoDao(); 
             
-            //isso é so um teste:
-            String tipo = "3";//pegar do bd o tipo de user(1=cli, 2= admin, 3=gerente)
-            session.setAttribute("tipo", tipo);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-            rd.forward(request,response);
-       
+            cliente.setNome(request.getParameter("nome"));
+            cliente.setLogin(request.getParameter("login"));
+            cliente.setSenha(request.getParameter("senha"));
+            cliente.setCpf(request.getParameter("cpf"));
+            cliente.setEmail(request.getParameter("email"));
+            cliente.setTelefone(request.getParameter("telefone"));
+            cliente.setCelular(request.getParameter("celular"));
+            cliente.setSexo(request.getParameter("sexo"));
+            
+            
+            String dataTexto = request.getParameter("data");
+            out.println(dataTexto);
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy"); //arrumar data
+            Date data = format.parse(dataTexto);
+            
+            cliente.setDataNascimento(data);
+            cliente.setStatus(true);
+            endereco.setCep(request.getParameter("cep"));
+            cidade = cidadeDao.getCidade(request.getParameter("cidade"));
+           
+            endereco.setCidade(cidade);
+            endereco.setComplemento(request.getParameter("complemento"));
+            endereco.setNumero(parseInt(request.getParameter("numero")));
+            endereco.setRua(request.getParameter("rua"));
+            endereco.setBairro(request.getParameter("bairro"));
+
+            enderecoDao.adiciona(endereco);
+            cliente.setEndereco(endereco);   
+            
+            
+            // FAZER Conexao DAO passando cliente
+            ClienteDao1 clienteDao = new ClienteDao1();
+            
+            if(!clienteDao.verificaCpf(cliente)){
+                clienteDao.adiciona(cliente);
+                 // Criando carrinho para o cliente
+                carrinhoDao.novoCarrinho(clienteDao.getCliente(cliente.getLogin()));
+                request.setAttribute("action", "logar");
+                RequestDispatcher rd = request.getRequestDispatcher("/servletLogar?action=logar");
+                rd.forward(request,response);
+            }
+            
+        
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    
+        }
     }
+    
+    public void processaErro( HttpServletRequest request, HttpServletResponse response, String erro){
+        try {
+            request.setAttribute("mensagem", erro);
+            //RequestDispatcher rd = request.getRequestDispatcher("erro.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
+            
+            rd.forward(request,response);
+        } catch (ServletException ex) {
+            Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

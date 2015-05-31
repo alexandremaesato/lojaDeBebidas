@@ -4,27 +4,25 @@
  * and open the template in the editor.
  */
 
-import Dao.*;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pacote.Cliente;
+import Dao.*;
+import pacote.*;
 
 /**
  *
  * @author Alexandre
  */
-@WebServlet(urlPatterns = {"/servletCadastrar"})
-public class servletCadastrar extends HttpServlet {
+@WebServlet(urlPatterns = {"/servletAjaxCadastro"})
+public class servletAjaxCadastro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,35 +35,51 @@ public class servletCadastrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("acao");
+        
+       
+        if("cpf".equals(action)){
         try (PrintWriter out = response.getWriter()) {
+            //out.println(action);
+            ClienteDao clienteDao = new ClienteDao();
+            /* TODO output your page here. You may use following sample code. */
             
+            String cpf = request.getParameter("cpf");
             Cliente cliente = new Cliente();
-            cliente.setNome(request.getParameter("nome"));
-            cliente.setLogin(request.getParameter("login"));
-            cliente.setSenha(request.getParameter("senha"));
-            cliente.setCpf(request.getParameter("cpf"));
-            cliente.setEmail(request.getParameter("email"));
-            cliente.setTelefone(request.getParameter("telefone"));
-            cliente.setCelular(request.getParameter("celular"));
-            cliente.setStatus(true);
-            out.println("52");
-            // FAZER Conexao DAO passando cliente
-            ClienteDao1 DaoCli= new ClienteDao1();
-            DaoCli.adiciona(cliente);
-            out.println("57");
-            //if(inseriu de boa){
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/servletLogar");
-            rd.forward(request,response);
-            //}else{
+            cliente.setCpf(cpf);
+            String json;
+            if(clienteDao.verificaCpf(cliente)){
+                json = new Gson().toJson("CPF ja cadastrado!");
+            }else{
+                json = new Gson().toJson("Ok");
+            }
             
-            //}
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(servletCadastrar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(servletCadastrar.class.getName()).log(Level.SEVERE, null, ex);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            }
+        }    
+        if("login".equals(action)){
+            try (PrintWriter out = response.getWriter()) {
+            ClienteDao clienteDao = new ClienteDao();
+            
+            String login = request.getParameter("login");
+            Cliente cliente = new Cliente();
+            cliente.setCpf(login);
+            String json;
+            if(clienteDao.verificaLogin(cliente)){
+                json = new Gson().toJson("Login ja cadastrado!");
+            }else{
+                json = new Gson().toJson("Ok");
+            }
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+            }
+            
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

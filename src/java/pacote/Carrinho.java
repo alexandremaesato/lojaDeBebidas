@@ -2,7 +2,8 @@ package pacote;
 
 
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.Date;
+
 
 import java.util.List;
 
@@ -17,18 +18,26 @@ import java.util.List;
  * @author Alexandre
  */
 public class Carrinho implements Serializable{
-    private int idCarrinho;
-    private Time dataPedido;
+    private Date dataPedido;
+    private long idCarrinho;
     private List<Produto> produtos;
 
     public Carrinho() {
     }
 
-    public Time getDataPedido() {
+    public long getIdCarrinho() {
+        return idCarrinho;
+    }
+
+    public void setIdCarrinho(long idCarrinho) {
+        this.idCarrinho = idCarrinho;
+    }
+    
+    public Date getDataPedido() {
         return dataPedido;
     }
 
-    public void setDataPedido(Time dataPedido) {
+    public void setDataPedido(Date dataPedido) {
         this.dataPedido = dataPedido;
     }
 

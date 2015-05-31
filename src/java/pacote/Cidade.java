@@ -13,11 +13,19 @@ import java.util.List;
  * @author Alexandre
  */
 public class Cidade implements Serializable{
-    private int idCidade;
+    private Long idCidade;
     private String cidade;
     private Boolean status;
 
     public Cidade() {
+    }
+
+    public Long getIdCidade() {
+        return idCidade;
+    }
+
+    public void setIdCidade(Long idCidade) {
+        this.idCidade = idCidade;
     }
 
     public String getCidade() {
@@ -27,8 +35,6 @@ public class Cidade implements Serializable{
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
-
-   
 
     public Boolean getStatus() {
         return status;

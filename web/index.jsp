@@ -75,7 +75,7 @@
             <c:import url="rel_produtos.jsp" />
        </c:when>
         <c:when test="${sessionScope.redir eq 'cadastrocli'}">
-            <c:import url="Cadastrar.jsp" />
+            <c:import url="cadastrar.jsp" />
        </c:when>
         
          <c:otherwise>

@@ -12,29 +12,39 @@ import java.io.Serializable;
  * @author Alexandre
  */
 public class Endereco implements Serializable{
-    private int idEndereco;
-    private String endereco;
-    private String numero;
+    private long idEndereco;
+    private String rua;
+    private int numero;
     private String complemento;
     private String cep;
-    private String cidade;
+    private Cidade cidade;
+    private String bairro;
 
     public Endereco() {
     }
 
-    public String getEndereco() {
-        return endereco;
+    public long getIdEndereco() {
+        return idEndereco;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setIdEndereco(long idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
-    public String getNumero() {
+    
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String endereco) {
+        this.rua = endereco;
+    }
+
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -54,13 +64,25 @@ public class Endereco implements Serializable{
         this.cep = cep;
     }
 
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+    
+    
+
+    
 
    
     

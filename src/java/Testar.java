@@ -21,7 +21,7 @@ public class Testar {
         cliente.setNome("Alexandre");
         cliente.setCpf("03736593937");
         endereco.setCep("81330490");
-        endereco.setEndereco("Afranio Peixoto");
+        //endereco.setEndereco("Afranio Peixoto");
         endereco.setCidade(null);
         cliente.setEndereco(endereco);
         

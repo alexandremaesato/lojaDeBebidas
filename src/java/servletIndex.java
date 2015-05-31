@@ -1,30 +1,27 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import Dao.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pacote.Cliente;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Alexandre
  */
-@WebServlet(urlPatterns = {"/servletCadastrar"})
-public class servletCadastrar extends HttpServlet {
+@WebServlet(urlPatterns = {"/servletIndex"})
+public class servletIndex extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,34 +34,27 @@ public class servletCadastrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
             
-            Cliente cliente = new Cliente();
-            cliente.setNome(request.getParameter("nome"));
-            cliente.setLogin(request.getParameter("login"));
-            cliente.setSenha(request.getParameter("senha"));
-            cliente.setCpf(request.getParameter("cpf"));
-            cliente.setEmail(request.getParameter("email"));
-            cliente.setTelefone(request.getParameter("telefone"));
-            cliente.setCelular(request.getParameter("celular"));
-            cliente.setStatus(true);
-            out.println("52");
-            // FAZER Conexao DAO passando cliente
-            ClienteDao1 DaoCli= new ClienteDao1();
-            DaoCli.adiciona(cliente);
-            out.println("57");
-            //if(inseriu de boa){
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/servletLogar");
-            rd.forward(request,response);
-            //}else{
-            
-            //}
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(servletCadastrar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(servletCadastrar.class.getName()).log(Level.SEVERE, null, ex);
+            String atr = (String)session.getAttribute("tipo");
+            if(atr.equals("Admin")){
+                
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cadastrar.jsp");   
+                rd.forward(request, response);
+                
+            }
+            if(atr.equals("Gerente")){
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cadastrar.jsp");   
+                rd.forward(request, response);
+                
+            }
+            else{
+                
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");   
+                rd.forward(request, response);
+            }
         }
     }
 

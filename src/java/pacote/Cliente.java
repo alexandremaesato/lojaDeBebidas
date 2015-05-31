@@ -2,7 +2,13 @@ package pacote;
 
 
 import java.io.Serializable;
-import java.sql.Time;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+
+
 
 
 /*
@@ -16,11 +22,11 @@ import java.sql.Time;
  * @author Alexandre
  */
 public class Cliente implements Serializable {
-    private int idCliente;
+    private long idCliente;
     private String nome;
     private String login;
     private String senha;
-    private Time dataNascimento; 
+    private Date dataNascimento; 
     private String sexo;
     private String cpf;
     private Endereco endereco;
@@ -29,15 +35,27 @@ public class Cliente implements Serializable {
     private String celular;
     private Boolean status;
     private Carrinho carrinho;
+    
 
     public Cliente() {
     }
+
+    public long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(long idCliente) {
+        this.idCliente = idCliente;
+    }
+    
+    
     
    
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
+    
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -55,9 +73,33 @@ public class Cliente implements Serializable {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSenha(String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        /*
+        MessageDigest algorithm = MessageDigest.getInstance("MD5");
+        byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+        StringBuilder hexString = new StringBuilder();
+        
+        for (byte b : messageDigest) {
+        hexString.append(String.format("%02X", 0xFF & b));
+        }
+                
+        this.senha = hexString.toString();
+        */
+        this.senha = convertPasswordToMD5(senha);
+        
     }
+    
+    
+ 
+    public static String convertPasswordToMD5(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+ 
+        BigInteger hash = new BigInteger(1, md.digest(password.getBytes()));
+ 
+        return String.format("%32x", hash);
+    }
+    
+    
 
     public String getCpf() {
         return cpf;
@@ -99,11 +141,11 @@ public class Cliente implements Serializable {
         this.status = status;
     }
 
-    public Time getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Time dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -114,9 +156,14 @@ public class Cliente implements Serializable {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
-    
-    public void setEndereco(Endereco endereco){
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+    
     
 }

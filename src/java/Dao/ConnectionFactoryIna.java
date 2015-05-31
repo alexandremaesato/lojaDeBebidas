@@ -13,12 +13,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
  
-public class ConnectionFactory {
+public class ConnectionFactoryIna {
     //static reference to itself
-    private static ConnectionFactory instance = new ConnectionFactory();
+    private static ConnectionFactoryIna instance = new ConnectionFactoryIna();
      
     //private constructor
-    private ConnectionFactory() {
+    private ConnectionFactoryIna() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -29,7 +29,7 @@ public class ConnectionFactory {
     private Connection createConnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/lojadebebidas?useUnicode=true&characterEncoding=UTF-8", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/bancoDados?useUnicode=true&characterEncoding=UTF-8", "root", "senha");
         } catch (SQLException e) {
             System.out.println("ERROR: Unable to Connect to Database.");
         }
