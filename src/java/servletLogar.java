@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Dao.DataLogDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -42,7 +43,7 @@ public class servletLogar extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         
         String action = request.getParameter("action");
@@ -51,7 +52,7 @@ public class servletLogar extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 out.println("1");    
                 //Antes fazer conexao DAO e verificar login e senha
-                ClienteDao1 clienteDao = new ClienteDao1();
+                ClienteDao clienteDao = new ClienteDao();
                 Cliente cliente = new Cliente();
                 Cliente clienteLogin = new Cliente();
 
@@ -63,10 +64,13 @@ public class servletLogar extends HttpServlet {
                 cliente = clienteDao.getCliente(login);
                 
                 if(clienteDao.verificaCliente(login, clienteLogin.getSenha())){
-                    out.println("2");
+                    DataLogDao datalogDao = new DataLogDao();
+                    datalogDao.adiciona(cliente);
+                    
                     HttpSession session = request.getSession();
                     session.setAttribute("nome", login);
                     session.setAttribute("tipo", login);// linha de teste
+                    
                     RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
                     rd.forward(request,response);
                     out.flush();
@@ -103,6 +107,18 @@ public class servletLogar extends HttpServlet {
             }
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/cadastrar.jsp");
             rd.forward(request, response);    
+        }
+        
+        if("deslogar".equals(action)){
+            ClienteDao clienteDao = new ClienteDao();
+            Cliente cliente = new Cliente();
+            cliente = clienteDao.getCliente(request.getParameter("login"));
+            HttpSession session = request.getSession();
+            DataLogDao datalogDao = new DataLogDao();
+            datalogDao.setLogout(cliente);
+            session.invalidate();
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request,response);
         }
         
         
@@ -149,7 +165,8 @@ public class servletLogar extends HttpServlet {
             
             
             // FAZER Conexao DAO passando cliente
-            ClienteDao1 clienteDao = new ClienteDao1();
+            ClienteDao clienteDao = new ClienteDao();
+            
             
             if(!clienteDao.verificaCpf(cliente)){
                 clienteDao.adiciona(cliente);
@@ -196,7 +213,11 @@ public class servletLogar extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -210,7 +231,11 @@ public class servletLogar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -15,7 +15,10 @@
     <c:choose>
         <c:when test="${not empty sessionScope.nome}">
            ${sessionScope.nome}</br>
-            <a href="logout.jsp">Deslogar</a>
+           <form action="servletLogar?action=deslogar&login=${sessionScope.nome}" method="post">
+                
+                <input class="botao" type="submit" value="Deslogar" /><br/>
+           </form>     
         </c:when>
         <c:otherwise>
             <form action="servletLogar?action=logar" method=POST>  
