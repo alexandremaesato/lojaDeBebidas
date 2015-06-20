@@ -23,6 +23,7 @@ import java.util.Date;
  */
 public class Cliente implements Serializable {
     private long idCliente;
+    private long idDataLog;
     private String nome;
     private String login;
     private String senha;
@@ -47,9 +48,22 @@ public class Cliente implements Serializable {
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
-    
-    
-    
+
+    public long getIdDataLog() {
+        return idDataLog;
+    }
+
+    public void setIdDataLog(long idDataLog) {
+        this.idDataLog = idDataLog;
+    }
+
+    public Carrinho getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
+    }
    
 
     public String getNome() {

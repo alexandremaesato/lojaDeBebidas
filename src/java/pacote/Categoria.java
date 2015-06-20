@@ -6,36 +6,31 @@
 package pacote;
 
 import java.io.Serializable;
-import java.util.List;
-
 /**
  *
  * @author Alexandre
  */
 public class Categoria implements Serializable{
     private int idCategoria;
-    private List<String> categorias;
+    private String nome;
     private int status;
 
-    
-    public String getCategoria(int i) {
-        return categorias.get(i);
-    }
-    
-    public List<String> getCategorias() {
-        return categorias;
+    public int getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setCategorias(List<String> categoria) {
-        this.categorias = categoria;
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
-  
-    public void setCategoria(String categoria) {
-        if( !this.categorias.contains(categoria)) {
-            this.categorias.add(categoria);
-        }    
+
+    public String getNome() {
+        return nome;
     }
-    
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -43,6 +38,9 @@ public class Categoria implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
+    
+    
     
     
 }

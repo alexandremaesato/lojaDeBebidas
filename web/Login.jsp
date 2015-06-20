@@ -13,9 +13,9 @@
     <jsp:useBean id="cliente" class="pacote.Cliente" scope="session"/>
     
     <c:choose>
-        <c:when test="${not empty sessionScope.nome}">
-           ${sessionScope.nome}</br>
-           <form action="servletLogar?action=deslogar&login=${sessionScope.nome}" method="post">
+        <c:when test="${not empty sessionScope.cliente.nome}">
+           ${sessionScope.cliente.nome}</br>
+           <form action="servletLogar?action=deslogar&login=${sessionScope.cliente.login}" method="post">
                 
                 <input class="botao" type="submit" value="Deslogar" /><br/>
            </form>     

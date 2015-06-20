@@ -25,6 +25,7 @@ import static javax.xml.bind.DatatypeConverter.parseInt;
 
 import pacote.*;
 import Dao.*;
+import static javax.xml.bind.DatatypeConverter.parseInt;
 
 /**
  *
@@ -53,9 +54,11 @@ public class servletLogar extends HttpServlet {
                 out.println("1");    
                 //Antes fazer conexao DAO e verificar login e senha
                 ClienteDao clienteDao = new ClienteDao();
+                Dao.CarrinhoDao carrinhoDao = new Dao.CarrinhoDao();
+                
                 Cliente cliente = new Cliente();
                 Cliente clienteLogin = new Cliente();
-
+                cliente.setCarrinho(carrinhoDao.getCarrinho(cliente));
                 String login = request.getParameter("login");
 
                 //String senha = request.getParameter("senha");
@@ -64,16 +67,29 @@ public class servletLogar extends HttpServlet {
                 cliente = clienteDao.getCliente(login);
                 
                 if(clienteDao.verificaCliente(login, clienteLogin.getSenha())){
+                    //Adiciona no LOG 
+                    try{
                     DataLogDao datalogDao = new DataLogDao();
                     datalogDao.adiciona(cliente);
                     
+                    
                     HttpSession session = request.getSession();
-                    session.setAttribute("nome", login);
-                    session.setAttribute("tipo", login);// linha de teste
+                    //Coloca o Cliente na Sessao
+                    session.setAttribute("cliente", cliente);
+                    
+                    //Coloca o Carrinho na Sessao
+                    session.setAttribute("carrinho",carrinhoDao.getCarrinho(cliente));
+                    
+                    
+                    //session.setAttribute("nome", login);
+                    session.setAttribute("tipo", "1");// linha de teste
+                    
                     
                     RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
                     rd.forward(request,response);
                     out.flush();
+                    }catch (Exception e){ 
+                        out.println(e);}
                     }else{
                 
                 processaErro(request, response,"Não foi possivel logar!</br>Erro de Login ou Senha.");
@@ -110,6 +126,7 @@ public class servletLogar extends HttpServlet {
         }
         
         if("deslogar".equals(action)){
+            
             ClienteDao clienteDao = new ClienteDao();
             Cliente cliente = new Cliente();
             cliente = clienteDao.getCliente(request.getParameter("login"));
@@ -128,7 +145,7 @@ public class servletLogar extends HttpServlet {
             Cliente cliente = new Cliente();
             CidadeDao cidadeDao = new CidadeDao();
             Cidade cidade = new Cidade();
-            CarrinhoDao carrinhoDao = new CarrinhoDao();
+            Dao.CarrinhoDao carrinhoDao = new Dao.CarrinhoDao();
             
             Endereco endereco = new Endereco();
             EnderecoDao enderecoDao = new EnderecoDao(); 
