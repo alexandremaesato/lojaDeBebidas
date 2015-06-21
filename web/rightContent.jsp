@@ -11,12 +11,9 @@
     <div class="border_box">
         <c:import url="Login.jsp" />
     </div>
-    
-      <div class="shopping_cart">
-        <div class="title_box">Carro de compras</div>
-        <div class="cart_details"> 3 itens <br />
-          <span class="border_cart"></span> Total: <span class="price">350R$</span> </div>
-        <div class="cart_icon"><a href="#"><img src="images/shoppingcart.png" alt="" width="35" height="35" border="0" /></a></div>
-      </div>      
+        <c:if test="${not empty sessionScope.cliente.nome}">
+            <c:import url="carrinho.jsp" />
+            
+        </c:if>
       <div class="banner_adds"> <a href="#"><img src="images/bann1.jpg" alt="" border="0" /></a> </div>
     </div>

@@ -18,7 +18,7 @@
         <li class="divider"></li>
          <li><a href="redir_cadastroCateg.jsp" class="nav">Cadastro de Categoria</a></li>
         <li class="divider"></li>
-         <li><a href="redir_cadastroProd.jsp" class="nav">Cadastro de Produto</a></li>
+         <li><a href="servletCategoria?action=listacat" formmethod="post" class="nav">Cadastro de Produto</a></li>
         <li class="divider"></li>
          <li><a href="redir_ajuda.jsp" class="nav">Ajuda</a></li>
         <li class="divider"></li>

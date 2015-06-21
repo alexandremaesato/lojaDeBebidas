@@ -5,7 +5,6 @@
  */
 package pacote;
 
-import java.awt.Image;
 import java.io.Serializable;
 
 /**
@@ -14,26 +13,43 @@ import java.io.Serializable;
  */
 public class Imagem implements Serializable {
     private int idImagem;
-    private Image foto;
-    private Image miniatura;
+    private int idProduto;
+    private String foto;
+    private String miniatura;
 
     public Imagem() {
     }
 
-    public Image getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(Image foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
-    public Image getMiniatura() {
+    public String getMiniatura() {
         return miniatura;
     }
 
-    public void setMiniatura(Image miniatura) {
+    public void setMiniatura(String miniatura) {
         this.miniatura = miniatura;
+    }
+
+    public int getIdImagem() {
+        return idImagem;
+    }
+
+    public void setIdImagem(int idImagem) {
+        this.idImagem = idImagem;
+    }
+
+    public int getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
     }
     
     

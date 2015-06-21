@@ -306,6 +306,36 @@ function atualizacep(cep){
       //document.getElementById('localidade').value=valor.localidade;
       //document.getElementById('uf').value=valor.uf;
     }
+    
+    function atualizaValorQuantidade(index) {
+    var valor = document.getElementsByName('valor');
+    //v = document.getElementById('total');
+    document.getElementById('subvalor' + index).value = document.getElementById('quantidade' + index).value * document.getElementById('valor' + index).innerText;
+    
+}
+
+
+function alteraItemCarrinho() {
+    alert("");
+    var page = "servletCarrinhoCompleto?action=altera&id=" + cpf.value +"quantidade=" + quantidade.value;
+    $.post(page, function (responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+        $('#cpfres').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+    });
+}
+
+function getValorTotal(){
+    var page = "servletCarrinhoCompleto?action=total";
+    $.post(page, function (responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+        $('#total').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+    });
+    alert();   
+}
+
+function replaceString(valor){  
+    //alert(document.getElementById("valor").value);  
+    //var valor = document.getElementById("valor").value;
+    valor.value = valor.value.replace(",","."); 
+}
 
 
 

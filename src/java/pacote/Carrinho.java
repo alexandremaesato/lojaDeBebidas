@@ -20,6 +20,8 @@ import java.util.List;
 public class Carrinho implements Serializable{
     private Date dataPedido;
     private long idCarrinho;
+    private float total = 0;
+    private int quantidade = 0;
     private List<Produto> produtos;
 
     public Carrinho() {
@@ -47,14 +49,38 @@ public class Carrinho implements Serializable{
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+        this.quantidade = produtos.size();
+        for(int i=0; i < this.quantidade; i++){
+            total = total + produtos.get(i).getValor();
+        }
+        
     }
     
     public void setProduto(Produto produto) {
         if (!this.produtos.contains(produto)){
             this.produtos.add(produto);
+            this.total =total + produto.getValor();
+            this.quantidade =quantidade + produto.getQuantidade();
         }
         
     }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    
     
     
     
