@@ -22,7 +22,8 @@ public class Carrinho implements Serializable{
     private long idCarrinho;
     private float total = 0;
     private int quantidade = 0;
-    private List<Produto> produtos;
+    private List<ProdutosCarrinho> produtosCarrinho;
+    //private List<Produto> produtos;
 
     public Carrinho() {
     }
@@ -43,30 +44,13 @@ public class Carrinho implements Serializable{
         this.dataPedido = dataPedido;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-        this.quantidade = produtos.size();
-        for(int i=0; i < this.quantidade; i++){
-            total = total + produtos.get(i).getValor();
-        }
-        
-    }
-    
-    public void setProduto(Produto produto) {
-        if (!this.produtos.contains(produto)){
-            this.produtos.add(produto);
-            this.total =total + produto.getValor();
-            this.quantidade =quantidade + produto.getQuantidade();
-        }
-        
-    }
-
     public float getTotal() {
-        return total;
+        this.total=0;
+        for(int i = 0; i<this.produtosCarrinho.size(); i++){
+            this.total = this.total + this.produtosCarrinho.get(i).getValor(); 
+        }
+        
+        return this.total;
     }
 
     public void setTotal(float total) {
@@ -74,12 +58,21 @@ public class Carrinho implements Serializable{
     }
 
     public int getQuantidade() {
-        return quantidade;
+        return this.quantidade = this.produtosCarrinho.size();
     }
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+    public List<ProdutosCarrinho> getProdutosCarrinho() {
+        return produtosCarrinho;
+    }
+
+    public void setProdutosCarrinho(List<ProdutosCarrinho> produtosCarrinho) {
+        this.produtosCarrinho = produtosCarrinho;
+    }
+    
     
     
     

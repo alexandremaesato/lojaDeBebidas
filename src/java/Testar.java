@@ -33,12 +33,14 @@ public class Testar {
         cliente = clienteDao.getCliente("ale");
         
         //cliente.setIdCliente(191);
-        carrinho = carrinhoDao.getCarrinho(cliente);
+        //carrinho = carrinhoDao.getCarrinho(cliente);
         //carrinho.setIdCarrinho(cliente.getCarrinho().getIdCarrinho());
-        produtos = carrinhoDao.getProdutosCarrinho(carrinho);
-        carrinho = carrinhoDao.getCarrinho(cliente);
+        //produtos = carrinhoDao.getProdutosCarrinho(carrinho);
+        //carrinho = carrinhoDao.getCarrinho(cliente);
         //System.out.println(produtos.get(1).getNome());
-        System.out.println(carrinho.getTotal());
+        //produtos = produtoDao.getProdutos();
+        carrinhoDao.deletarItemCarrinho(192, 19);//float valor = carrinho.getTotal();
+        
         /*
         Cliente cliente = new Cliente();
         Endereco endereco = new Endereco();

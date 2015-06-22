@@ -55,14 +55,10 @@ public class servletLogar extends HttpServlet {
                 //Antes fazer conexao DAO e verificar login e senha
                 ClienteDao clienteDao = new ClienteDao();
                 Dao.CarrinhoDao carrinhoDao = new Dao.CarrinhoDao();
-                
                 Cliente cliente = new Cliente();
                 Cliente clienteLogin = new Cliente();
                 cliente.setCarrinho(carrinhoDao.getCarrinho(cliente));
                 String login = request.getParameter("login");
-
-                //String senha = request.getParameter("senha");
-                
                 clienteLogin.setSenha(request.getParameter("senha"));
                 cliente = clienteDao.getCliente(login);
                 

@@ -315,12 +315,28 @@ function atualizacep(cep){
 }
 
 
-function alteraItemCarrinho() {
-    alert("");
-    var page = "servletCarrinhoCompleto?action=altera&id=" + cpf.value +"quantidade=" + quantidade.value;
-    $.post(page, function (responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-        $('#cpfres').text(responseText);         // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
-    });
+function alteraItemCarrinho(index) {
+    var id = "#idQuantidade"+index;
+    id = $(id).val();
+    
+    var quantidade = "#quantidade"+index;
+    quantidade = $(quantidade).val();
+    
+    $.post( 'servletCarrinho?action=alterar&id='+id+'&quantidade='+quantidade );
+    setTimeout("alert('Valor atualizado');", 2);
+    window.location.replace('redir_carrinhoCompleto.jsp');  
+}
+
+function removeItemCarrinho(index) {
+    var id = "#idProduto"+index;
+    id = $(id).val();
+    
+    var idCarrinho = "#idCarrinho"+index;
+    idCarrinho = $(idCarrinho).val();
+    
+    $.post( 'servletCarrinho?action=delete&idProduto='+id+'&idCarrinho='+idCarrinho );
+    setTimeout("alert('Item excluido');", 2);
+    window.location.replace('redir_carrinhoCompleto.jsp');  
 }
 
 function getValorTotal(){

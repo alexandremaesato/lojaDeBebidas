@@ -15,6 +15,7 @@ import pacote.Categoria;
 import pacote.Cliente;
 import pacote.Endereco;
 import pacote.Produto;
+import pacote.ProdutosCarrinho;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -69,8 +70,7 @@ public class CarrinhoDao {
             if (rs.next()) {
                 Carrinho carrinho = new Carrinho();
                 carrinho.setIdCarrinho(rs.getLong("idCarrinho"));
-                
-                carrinho.setProdutos(getProdutosCarrinho(carrinho));
+                carrinho.setProdutosCarrinho(getProdutosCarrinho(carrinho));
                 return carrinho;
             }
             return null;
@@ -84,12 +84,26 @@ public class CarrinhoDao {
         }
     }
     
-    public List<Produto> getProdutosCarrinho(Carrinho carrinho) throws SQLException {
-        String sql = "select * from produto " +
-                     "inner join produtoscarrinho on produtoscarrinho.idProduto = produto.idProduto where produtoscarrinho.idcarrinho=?";
+    public List<ProdutosCarrinho> getProdutosCarrinho(Carrinho carrinho) throws SQLException {
+        String sql = "select produtoscarrinho.idProdutoscarrinho as idProdutocarrinhoPC,\n" +
+"produtoscarrinho.idproduto as idprodutoPC,\n" +
+"produtoscarrinho.idCarrinho as idCarrinhoPC,\n" +
+"produtoscarrinho.quantidade as quantidadePC,\n" +
+"produtoscarrinho.valor as valorPC,\n" +
+"Produto.idProduto as idProdutoP,\n" +
+"Produto.idCategoria as idCategoriaP,\n" +
+"Produto.nome as nomeP,\n" +
+"Produto.descricao as descricaoP,\n" +
+"Produto.valor as valorP,\n" +
+"Produto.quantidade as quantidadeP,\n" +
+"Produto.status as statusP,\n" +
+"Produto.imagem as imagemP\n" +
+"from produto\n" +
+"inner join produtoscarrinho on produtoscarrinho.idProduto = produto.idProduto where produtoscarrinho.idcarrinho=?";
         DaoCategoria categoriaDao = new DaoCategoria();
         List<Categoria> categorias = categoriaDao.buscaLista();
         List<Produto> produtos = new ArrayList();
+        List<ProdutosCarrinho> listaProdutosCarrinho = new ArrayList();
         //colocar conexao de estoque
         try {
             stmt = connection.prepareStatement(sql);
@@ -98,18 +112,25 @@ public class CarrinhoDao {
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
                 Produto produto = new Produto();
-                produto.setCategoria(categorias.get((int) rs.getLong("idCategoria")));
-                produto.setDescricao(rs.getString("descricao"));
+                ProdutosCarrinho produtosCarrinho = new ProdutosCarrinho();
+                produto.setCategoria(categorias.get((int) rs.getLong("idCategoriaP")));
+                produto.setDescricao(rs.getString("descricaoP"));
                 //produto.setEstoque();
-                produto.setIdProduto(rs.getInt("idProduto"));
-                produto.setImagem(rs.getString("imagem"));
-                produto.setNome(rs.getString("nome"));
-                produto.setQuantidade(rs.getInt("quantidade"));
-                produto.setStatus(rs.getInt("status"));
-                produto.setValor(rs.getFloat("valor"));
-                produtos.add(produto);
+                produto.setIdProduto(rs.getInt("idProdutoP"));
+                produto.setImagem(rs.getString("imagemP"));
+                produto.setNome(rs.getString("nomeP"));
+                produto.setQuantidade(rs.getInt("quantidadeP"));
+                produto.setStatus(rs.getInt("statusP"));
+                produto.setValor(rs.getFloat("valorP"));
+                produtosCarrinho.setProduto(produto);
+                produtosCarrinho.setIdCarrinho(rs.getLong("idCarrinhoPC"));
+                produtosCarrinho.setIdProduto(rs.getLong("idProdutoPC"));
+                produtosCarrinho.setIdProdutoCarrinho(rs.getLong("idProdutocarrinhoPC"));
+                produtosCarrinho.setQuantidade(rs.getInt("quantidadePC"));
+                produtosCarrinho.setValor(rs.getFloat("valorPC"));
+                listaProdutosCarrinho.add(produtosCarrinho);
             }
-            return produtos;
+            return listaProdutosCarrinho;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
