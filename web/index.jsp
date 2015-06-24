@@ -80,6 +80,9 @@
         <c:when test="${sessionScope.redir eq 'carrinhoCompleto'}">
             <c:import url="carrinhoCompleto.jsp" />
         </c:when>
+         <c:when test="${sessionScope.redir eq 'pagamento'}">
+            <c:import url="pagamento.jsp" />
+        </c:when>
         
          <c:otherwise>
              <c:import url="centerContent.jsp" />

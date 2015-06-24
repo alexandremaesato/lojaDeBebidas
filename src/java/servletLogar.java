@@ -48,11 +48,13 @@ public class servletLogar extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String action = request.getParameter("action");
+        HttpSession session = request.getSession();
         
         if ("logar".equals(action)){
             try (PrintWriter out = response.getWriter()) {
                 out.println("1");    
                 //Antes fazer conexao DAO e verificar login e senha
+                CidadeDao cidadeDao = new CidadeDao();
                 ClienteDao clienteDao = new ClienteDao();
                 Dao.CarrinhoDao carrinhoDao = new Dao.CarrinhoDao();
                 Cliente cliente = new Cliente();
@@ -62,30 +64,29 @@ public class servletLogar extends HttpServlet {
                 clienteLogin.setSenha(request.getParameter("senha"));
                 cliente = clienteDao.getCliente(login);
                 
+                
                 if(clienteDao.verificaCliente(login, clienteLogin.getSenha())){
                     //Adiciona no LOG 
                     try{
                     DataLogDao datalogDao = new DataLogDao();
                     datalogDao.adiciona(cliente);
                     
-                    
-                    HttpSession session = request.getSession();
                     //Coloca o Cliente na Sessao
                     session.setAttribute("cliente", cliente);
                     
                     //Coloca o Carrinho na Sessao
                     session.setAttribute("carrinho",carrinhoDao.getCarrinho(cliente));
                     
-                    
                     //session.setAttribute("nome", login);
                     session.setAttribute("tipo", "1");// linha de teste
                     
-                    
+                    session.setAttribute("cidades", cidadeDao.getCidades());
                     RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
                     rd.forward(request,response);
                     out.flush();
                     }catch (Exception e){ 
                         out.println(e);}
+                    
                     }else{
                 
                 processaErro(request, response,"Não foi possivel logar!</br>Erro de Login ou Senha.");
@@ -126,7 +127,7 @@ public class servletLogar extends HttpServlet {
             ClienteDao clienteDao = new ClienteDao();
             Cliente cliente = new Cliente();
             cliente = clienteDao.getCliente(request.getParameter("login"));
-            HttpSession session = request.getSession();
+            session = request.getSession();
             DataLogDao datalogDao = new DataLogDao();
             datalogDao.setLogout(cliente);
             session.invalidate();

@@ -49,7 +49,7 @@
                         <div class="center_prod_box_big">
                             <div class="product_title">
                                 <div class="prod_price_big" id="total">Valor Total: <fmt:formatNumber value="${carrinho.total}" type="currency"/></div>
-                                <div><input class="button" type="button" onclick="" value="Finalizar Compra" /></div>
+                                <div><input class="button" type="button" onclick="window.location.replace('redir_pagamento.jsp');" value="Finalizar Compra" /></div>
                             </div>
                         </div>
                     </div>
