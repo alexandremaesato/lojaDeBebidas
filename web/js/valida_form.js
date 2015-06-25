@@ -364,15 +364,14 @@ function replaceString(valor) {
 }
 
 function alteraCampos(){
-    if ($('#checar').val) {
-        alert("entrou");
-        $('#cepe').prop("disabled", $('#cepe').checked);
-        
-    }
-    else{
-        alert("fora");
-    $('#cepe').prop("disabled", !this.checked);
-    }
+    $('#cepe').removeAttr('disabled');
+    $('#ruae').removeAttr('disabled');
+    $('#cepe').removeAttr('disabled');
+    $('#numeroe').removeAttr('disabled');
+    $('#bairroe').removeAttr('disabled');
+    $('#cidadee').removeAttr('disabled');
+    $('#complementoe').removeAttr('disabled');
+    
 }
         
 

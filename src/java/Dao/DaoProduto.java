@@ -67,6 +67,9 @@ public class DaoProduto {
     }
     public List<Produto> busca(String cat,String ordem) throws SQLException {
         String query;
+        if(ordem.equals("nenhum")){
+            query = "SELECT * FROM produto";
+        }else
         if(cat.equals("todos"))
              query = "SELECT * FROM produto p, imagem a where p.idProduto= a.idProduto ORDER BY "+ordem;
         else
@@ -90,12 +93,7 @@ public class DaoProduto {
                     p.setValor(resultSet.getFloat("valor"));
                     p.setQuantidade(resultSet.getInt("quantidade"));
                     p.setStatus(resultSet.getInt("status"));
-                    
-                    
-                  
-                    p.setImagem(resultSet.getString("foto"));
-
-                    
+                    p.setImagem(resultSet.getString("imagem"));
                     lista.add(p);  
                 }  
             }finally {       

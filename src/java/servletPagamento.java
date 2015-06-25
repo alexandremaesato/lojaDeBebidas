@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Dao.ClienteDao;
 import Dao.VendaDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import static javax.xml.bind.DatatypeConverter.parseFloat;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 import static javax.xml.bind.DatatypeConverter.parseLong;
 import pacote.Cidade;
+import pacote.Cliente;
 import pacote.Endereco;
 import pacote.Venda;
 
@@ -44,45 +46,51 @@ public class servletPagamento extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
+        Cliente cliente;
+        ClienteDao clienteDao = new ClienteDao();
+        
         String action = request.getParameter("action");
         String idEndereco = request.getParameter("idEndereco");
+        String check = request.getParameter("checar");
         HttpSession session = request.getSession();
+        cliente = (Cliente) session.getAttribute("cliente");
 
         try (PrintWriter out = response.getWriter()) {
-            try{
-            if ("pagar".equals(action)) {
-                VendaDao vendaDao = new VendaDao();
-                EnderecoDao enderecoDao = new EnderecoDao();
-                Venda venda = new Venda();
-                Endereco endereco = new Endereco();
-                if (idEndereco.isEmpty()) {
+            try {
+                if ("pagar".equals(action)) {
+                    VendaDao vendaDao = new VendaDao();
+                    EnderecoDao enderecoDao = new EnderecoDao();
+                    Venda venda = new Venda();
+                    Endereco endereco = new Endereco();
 
-                    CidadeDao cidadeDao = new CidadeDao();
-                    endereco.setBairro(request.getParameter("bairro"));
-                    endereco.setCep(request.getParameter("cep"));
-                    endereco.setCidade(cidadeDao.getCidade(request.getParameter("Cidade")));
-                    endereco.setComplemento(request.getParameter("idEndereco"));
-                    endereco.setNumero(parseInt(request.getParameter("numero")));
-                    endereco.setRua(request.getParameter("rua"));
-                } else {
-                    endereco = enderecoDao.getEndereco(parseLong(idEndereco));
+                    if ("teste".equals(check)) {
+                        CidadeDao cidadeDao = new CidadeDao();
+                        endereco.setBairro(request.getParameter("bairro"));
+                        endereco.setCep(request.getParameter("cep"));
+                        endereco.setCidade(cidadeDao.getCidade(request.getParameter("Cidade")));
+                        endereco.setComplemento(request.getParameter("idEndereco"));
+                        endereco.setNumero(parseInt(request.getParameter("numero")));
+                        endereco.setRua(request.getParameter("rua"));
+                    } else {
+                        endereco = cliente.getEndereco();
+                    }
+                    venda.setEndereco(endereco);
+                    venda.setDataEnvio(new java.sql.Date(System.currentTimeMillis()));
+                    venda.setEnviado(false);
+                    venda.setFormaDeEnvio(request.getParameter("formaDeEnvio"));
+                    venda.setDataPagamento(new java.sql.Date(System.currentTimeMillis()));
+                    venda.setIdCarrinho(cliente.getCarrinho().getIdCarrinho());
+                    venda.setIdEndereco(endereco.getIdEndereco());
+                    venda.setPago(true);
+                    venda.setValor(cliente.getCarrinho().getTotal());
+                    
+                    vendaDao.novaVenda(venda);
+                    processaMensagem(request, response, "Deu certo");
+
                 }
-                venda.setEndereco(endereco);
-                venda.setDataEnvio(new java.sql.Date(System.currentTimeMillis()));
-                venda.setEnviado(false);
-                venda.setFormaDeEnvio(request.getParameter("formaDeEnvio"));
-                venda.setDataPagamento(new java.sql.Date(System.currentTimeMillis()));
-                venda.setIdCarrinho(parseLong(request.getParameter("idCarrinho")));
-                venda.setIdEndereco(endereco.getIdEndereco());
-                venda.setPago(true);
-                venda.setValor(parseFloat(request.getParameter("valor")));
-                
-                processaMensagem(request, response, "Deu certo");
-
-            }
-            }catch (Exception e){
-                processaMensagem(request, response, "Deu erro: "+e);
+            } catch (Exception e) {
+                processaMensagem(request, response, "Deu erro: " + e);
             }
         }
     }
@@ -133,20 +141,20 @@ public class servletPagamento extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-     public void processaMensagem( HttpServletRequest request, HttpServletResponse response, String mensagem){
+
+    public void processaMensagem(HttpServletRequest request, HttpServletResponse response, String mensagem) {
         try {
             request.setAttribute("mensagem", mensagem);
             //RequestDispatcher rd = request.getRequestDispatcher("erro.jsp");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/mensagem.jsp");
-            
-            rd.forward(request,response);
+
+            rd.forward(request, response);
         } catch (ServletException ex) {
             Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 }

@@ -9,6 +9,8 @@ import Dao.DaoProduto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pacote.Categoria;
+import pacote.Produto;
 
 /**
  *
@@ -81,12 +84,14 @@ public class servletCategoria extends HttpServlet {
         }
         if ("buscamenuleft".equals(action)){
             try (PrintWriter out = response.getWriter()) {
-           
+            List<Produto> produtos = new ArrayList();
             DaoProduto dp = new DaoProduto();
            // DaoCategoria catd = new DaoCategoria();
             Categoria c = new Categoria();
-
-            request.setAttribute("produtos", dp.busca(request.getParameter("id"), request.getParameter("ordem")));
+            String id = request.getParameter("id");
+            String ordem = request.getParameter("ordem");
+            produtos = dp.busca(id, ordem);
+            request.setAttribute("produtos", produtos );
            // request.setAttribute("lista", catd.buscaLista());
 
             out.println(request.getParameter("id"));
@@ -94,7 +99,7 @@ public class servletCategoria extends HttpServlet {
             
             HttpSession session = request.getSession();
             session.setAttribute("redir", "produtos");
-            
+            session.setAttribute("produtos", produtos );
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
  

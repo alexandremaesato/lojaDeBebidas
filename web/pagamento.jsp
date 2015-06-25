@@ -18,12 +18,12 @@
         <div class="center_content">
             <div id="main_content">
                 <div class="center_title_bar">Pagamento</div>
-                <form>
+                
                     <div class="prod_box_big">
                         <div class="center_prod_box_big">
                             <div class="contact_form">
                                 <h1>Dados Cadastrais</h1>
-
+                                <form action="servletPagamento?action=pagar" method="POST" onsubmit="return validate_form(this);" >
                                 <table class="tableCompra">
                                     <tr><td>Nome: <td>${cliente.nome}</td></td></tr>
                                     <tr><td>Data Nascimento: <td>${cliente.dataNascimento}</td></tr>
@@ -43,32 +43,33 @@
                                 </table>
                                 </br>
                                 <h1>Endereco de Entrega</h1>
-                                <h3><td><tr>Endereco de entrega o mesmo do Cadastro</tr><tr><input id="checar" type="checkbox"  onclick="alteraCampos();"</tr></td></br></h3>
+                                <h3><td><tr>Endereco de entrega o mesmo do Cadastro</tr><tr><input id="checar" type="checkbox" checked="false"  onclick="alteraCampos();"</tr></td></br></h3>
                                     <table class="tableCompra">
-                                        <form action="servletPagamento?action=pagar" method="POST" onsubmit="return validate_form(this);" >   
+                                           
 
 
-                                            <tr><td>Cep: <td><input type="text" id="cepe"  name="cep"  onblur="atualizacep(this.value)"  maxlength="9"/></td></td></tr>
-                                            <tr><td>Endereço: <td><input type="text" name="ruae" id="rua" value=""/></td></td></tr>
-                                            <tr><td>Número: <td><input type="text" name="numeroe" value=""/></td></td></tr>
-                                            <tr><td>Bairro:<td> <input type="text" id="bairroe" name="bairro" value=""/></td></td></tr>
+                                            <tr><td>Cep: <td><input type="text" id="cepe"  name="cep"  onblur="atualizacep(this.value)" disabled="true" maxlength="9"/></td></td></tr>
+                                            <tr><td>Endereço: <td><input type="text" name="ruae" id="ruae" value="" disabled="true"></td></td></tr>
+                                            <tr><td>Número: <td><input type="text" id="numeroe" name="numero" value="" disabled="true"/></td></td></tr>
+                                            <tr><td>Bairro:<td> <input type="text" id="bairroe" name="bairro" value="" disabled="true"/></td></td></tr>
                                             <tr><td>Cidade:<td> 
-                                                        <select name="cidadee">
+                                                        <select name="cidadee" id="cidadee" disabled="true">
                                                             <c:forEach var="c" items="${cidades}">
                                                                 <option value="${c.cidade}"><c:out value="${c.cidade}"/></option></br>
                                                             </c:forEach>
                                                         </select>    
                                                     </td></td></tr>
-                                            <tr><td></br>Complemento: <td><input id="complementoe" type="text" name="complemento" value=""/></td></td></tr>
+                                            <tr><td></br>Complemento: <td><input id="complementoe" type="text" name="complemento" value="" disabled="true"/></td></td></tr>
 
                                             <tr><td></br><td></td></td></tr>
                                     </table>
-
-                                    </form>
+                                <input type="submit" value="Pagar"/>
+                                    
 
                                     <div class="" id="stotal">Taxa de Entrega: <fmt:formatNumber value="10" type="currency"/></div>
                                     <div class="valorTotal" id="total">Valor Total: <fmt:formatNumber value="${carrinho.total+5}" type="currency"/></div>
                                     <div><input class="botao" formmethod="post" formaction="" type="submit" value="Pagar"></div>
+                                    </form>
                             </div>
                         </div>
                     </div>
