@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import pacote.Carrinho;
@@ -37,7 +39,7 @@ public class CarrinhoDao {
 
     public void novoCarrinho(Cliente cliente) {
         //String sql = "insert into carrinho (idCliente) values(?)";
-        String sql = "INSERT INTO  carrinho (idCliente, dataPedido,status) VALUES (?,?,'aberto')";
+        String sql = "INSERT INTO  carrinho (idCliente, dataPedido) VALUES (?,?)";
 
         try {
             // prepared statement para inserção
@@ -45,7 +47,7 @@ public class CarrinhoDao {
 
         // seta os valores
             stmt.setLong(1, cliente.getIdCliente());
-            stmt.setDate(2, new Date(System.currentTimeMillis()));
+            stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 
             // executa
             stmt.execute();
