@@ -14,7 +14,7 @@
 
                 <h1 >Cadastre uma nova Categoria</h1></br>
 
-                <form action="servletCategoria?action=cadastracat" method="post" onsubmit="return validacadastroentrada(this);">	
+                <form action="servletCategoria?action=cadastracat" method="post" onsubmit="return validacategoria(this);">	
                     <table>
                         <tr>	<td>	Categoria: </td><td><input type="text" name="categoria" size="30"></td></tr>
 

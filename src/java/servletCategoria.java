@@ -84,14 +84,12 @@ public class servletCategoria extends HttpServlet {
         }
         if ("buscamenuleft".equals(action)){
             try (PrintWriter out = response.getWriter()) {
-            List<Produto> produtos = new ArrayList();
+           
             DaoProduto dp = new DaoProduto();
            // DaoCategoria catd = new DaoCategoria();
             Categoria c = new Categoria();
-            String id = request.getParameter("id");
-            String ordem = request.getParameter("ordem");
-            produtos = dp.busca(id, ordem);
-            request.setAttribute("produtos", produtos );
+
+            request.setAttribute("produtos", dp.busca(request.getParameter("id"), "nome ASC;"));
            // request.setAttribute("lista", catd.buscaLista());
 
             out.println(request.getParameter("id"));
@@ -99,7 +97,7 @@ public class servletCategoria extends HttpServlet {
             
             HttpSession session = request.getSession();
             session.setAttribute("redir", "produtos");
-            session.setAttribute("produtos", produtos );
+            
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
  

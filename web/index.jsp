@@ -33,7 +33,7 @@
                 </div>
                 <!-- end of menu tab -->
                 <div class="crumb_navigation">Navegação: <span class="current">Home</span> </div>
-                <c:import url="leftContent.jsp" />
+                <!--c:import url="leftContent.jsp" /--> <c:import url="servletMenuEsq" />
                 <!-- end of left content -->
 
 

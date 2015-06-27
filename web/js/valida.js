@@ -115,3 +115,10 @@ function validaclisel(formulario) {
         return false;
     }
 }
+function validacategoria(formulario) {
+    if (formulario.categoria.value == "")
+    {
+        alert("Digite uma categoria!");
+        return false;
+    }
+}

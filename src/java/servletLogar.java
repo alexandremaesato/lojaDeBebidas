@@ -87,7 +87,7 @@ public class servletLogar extends HttpServlet {
                         session.setAttribute("tipo", 1);// linha de teste
 
                         session.setAttribute("cidades", cidadeDao.getCidades());
-                        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                        RequestDispatcher rd = request.getRequestDispatcher("servletProduto?action=pagina");
                         rd.forward(request,response);
                         out.flush();
                     } catch (Exception e) {
@@ -106,7 +106,7 @@ public class servletLogar extends HttpServlet {
                         session.setAttribute("tipo", func.getTipo());// linha de teste
 
                        // session.setAttribute("cidades", cidadeDao.getCidades());
-                        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                        RequestDispatcher rd = request.getRequestDispatcher("servletProduto?action=pagina");
             rd.forward(request,response);
                         out.flush();
                     } catch (Exception e) {
