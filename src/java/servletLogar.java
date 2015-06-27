@@ -65,6 +65,12 @@ public class servletLogar extends HttpServlet {
                 cliente = clienteDao.getCliente(login);
                 cliente.setCarrinho(carrinhoDao.getCarrinho(cliente));
 
+                FuncionarioDao fd=new FuncionarioDao();
+                Funcionario funcLogin=new Funcionario();
+                funcLogin.setSenha(request.getParameter("senha"));
+                 Funcionario func=new Funcionario();
+                func = fd.getFunc(login);
+                
                 if (clienteDao.verificaCliente(login, clienteLogin.getSenha())) {
                     //Adiciona no LOG 
                     try {
@@ -78,7 +84,7 @@ public class servletLogar extends HttpServlet {
                         session.setAttribute("carrinho", carrinhoDao.getCarrinho(cliente));
 
                         //session.setAttribute("nome", login);
-                        session.setAttribute("tipo", "1");// linha de teste
+                        session.setAttribute("tipo", 1);// linha de teste
 
                         session.setAttribute("cidades", cidadeDao.getCidades());
                         RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
@@ -87,6 +93,27 @@ public class servletLogar extends HttpServlet {
                     } catch (Exception e) {
                         out.println(e);
                     }
+                }
+                    else if (fd.verificaFunc(login, funcLogin.getSenha())) {
+                    //Adiciona no LOG 
+                    try {
+                          // session.setAttribute("cliente", cliente);
+
+                        //Coloca o Carrinho na Sessao
+                       // session.setAttribute("carrinho", carrinhoDao.getCarrinho(cliente));
+
+                        //session.setAttribute("nome", login);
+                        session.setAttribute("tipo", func.getTipo());// linha de teste
+
+                       // session.setAttribute("cidades", cidadeDao.getCidades());
+                        RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
+                        rd.forward(request, response);
+                        out.flush();
+                    } catch (Exception e) {
+                        out.println(e);
+                    }
+                            
+                            
 
                 } else {
 

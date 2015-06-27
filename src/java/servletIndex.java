@@ -38,16 +38,17 @@ public class servletIndex extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             
-            String atr = (String)session.getAttribute("tipo");
-            if(atr.equals("Admin")){
+            int atr = (int)session.getAttribute("tipo");
+            if(atr==2){
                 
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cadastrar.jsp");   
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");   
                 rd.forward(request, response);
                 
-            }
-            if(atr.equals("Gerente")){
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cadastrar.jsp");   
-                rd.forward(request, response);
+            }else
+            if(atr==3){
+                
+               RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");   
+               rd.forward(request, response);
                 
             }
             else{
