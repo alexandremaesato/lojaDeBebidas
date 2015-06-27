@@ -69,6 +69,31 @@ public class servletProduto extends HttpServlet {
             //  <c:set var="redir" value="cadastroprod" scope="session" />  
             rd.forward(request, response);
         }
+        if ("listaprod".equals(action)){
+          try (PrintWriter out = response.getWriter()) {
+
+            DaoProduto dp=new DaoProduto();
+           // dp.busca(request.getParameter("cat"), request.getParameter("ordem"));
+           // DaoCategoria catd = new DaoCategoria();
+           Categoria c=new Categoria();
+            
+             request.setAttribute("produtos", dp.busca(request.getParameter("cat"), request.getParameter("ordem")));
+            //  request.setAttribute("lista", catd.buscaLista());
+             
+              out.println(request.getParameter("cat"));
+            out.print(request.getParameter("ordem"));
+                        
+              HttpSession session = request.getSession();
+            session.setAttribute("redir", "produtos");
+             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+          //  <c:set var="redir" value="cadastroprod" scope="session" />  
+            rd.forward(request, response);  
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+            
+        }
 
         if ("cadastrap".equals(action)){
             try (PrintWriter out = response.getWriter()) {

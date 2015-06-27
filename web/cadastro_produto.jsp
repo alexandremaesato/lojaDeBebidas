@@ -39,7 +39,7 @@
 						<tr>	<td> Selecione uma Imagem: </td>
 							<td>
 							<input type="file" name="arq"/>
-                                                        <input type="hidden" value="C:\Users\Ina\Documents\NetBeansProjects\lojaBebs\web\images" name="destino"/>
+                                                        <input type="hidden" value="C:\Users\Alexandre\Google Drive\PROJETOS JAVA\LojaDeBebidas_TESTES\web\images" name="destino"/>
 
 							</td>
 						</tr>
