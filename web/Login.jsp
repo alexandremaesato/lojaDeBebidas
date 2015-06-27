@@ -20,6 +20,13 @@
                 <input class="botao" type="submit" value="Deslogar" /><br/>
            </form>     
         </c:when>
+           <c:when test="${not empty sessionScope.funcio.nome}">
+           ${sessionScope.cliente.nome}</br>
+           <form action="servletLogar?action=deslogarF&login=${sessionScope.funcio.login}" method="post">
+                
+                <input class="botao" type="submit" value="Deslogar" /><br/>
+           </form>     
+        </c:when>
         <c:otherwise>
             <form action="servletLogar?action=logar" method=POST>  
                 Login:  <input type=text name=login  /><br/>

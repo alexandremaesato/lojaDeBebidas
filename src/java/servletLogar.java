@@ -87,8 +87,8 @@ public class servletLogar extends HttpServlet {
                         session.setAttribute("tipo", 1);// linha de teste
 
                         session.setAttribute("cidades", cidadeDao.getCidades());
-                        RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
-                        rd.forward(request, response);
+                        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                        rd.forward(request,response);
                         out.flush();
                     } catch (Exception e) {
                         out.println(e);
@@ -97,7 +97,7 @@ public class servletLogar extends HttpServlet {
                     else if (fd.verificaFunc(login, funcLogin.getSenha())) {
                     //Adiciona no LOG 
                     try {
-                          // session.setAttribute("cliente", cliente);
+                           session.setAttribute("funcio", func);
 
                         //Coloca o Carrinho na Sessao
                        // session.setAttribute("carrinho", carrinhoDao.getCarrinho(cliente));
@@ -106,8 +106,8 @@ public class servletLogar extends HttpServlet {
                         session.setAttribute("tipo", func.getTipo());// linha de teste
 
                        // session.setAttribute("cidades", cidadeDao.getCidades());
-                        RequestDispatcher rd = request.getRequestDispatcher("/servletIndex");
-                        rd.forward(request, response);
+                        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request,response);
                         out.flush();
                     } catch (Exception e) {
                         out.println(e);
@@ -155,6 +155,17 @@ public class servletLogar extends HttpServlet {
             session = request.getSession();
             DataLogDao datalogDao = new DataLogDao();
             datalogDao.setLogout(cliente);
+            session.invalidate();
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        }
+         if ("deslogarF".equals(action)) {
+
+           FuncionarioDao fDao = new FuncionarioDao();
+            Funcionario f = new Funcionario();
+            f = fDao.getFunc(request.getParameter("login"));
+            session = request.getSession();
+           
             session.invalidate();
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);

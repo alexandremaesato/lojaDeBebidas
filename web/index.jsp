@@ -20,10 +20,10 @@
             <div id="main_content">
                 <div id="menu_tab">
                     <c:choose>
-                        <c:when test="${sessionScope.tipo eq '3'}">
+                        <c:when test="${sessionScope.tipo eq 3}">
                             <c:import url="menuTopGer.jsp" />
                         </c:when>
-                        <c:when test="${sessionScope.tipo eq '2'}">
+                        <c:when test="${sessionScope.tipo eq 2}">
                             <c:import url="menuTopAdm.jsp" />
                         </c:when>
                         <c:otherwise>
