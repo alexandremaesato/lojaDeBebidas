@@ -65,7 +65,7 @@ public class DaoProduto {
                         try{ptmt.close();}catch (Exception ex){};
                 }
     }
-    public List<Produto> busca(String cat,String ordem) throws SQLException {
+    /*public List<Produto> busca(String cat,String ordem) throws SQLException {
         String query;
         if(ordem.equals("nenhum")){
             query = "SELECT * FROM produto";
@@ -94,6 +94,44 @@ public class DaoProduto {
                     p.setQuantidade(resultSet.getInt("quantidade"));
                     p.setStatus(resultSet.getInt("status"));
                     p.setImagem(resultSet.getString("imagem"));
+                    lista.add(p);  
+                }  
+            }finally {       
+            }
+                return lista;  
+            
+        }  */
+    public List<Produto> busca(String cat,String ordem) throws SQLException {
+        String query;
+        if(cat.equals("todos"))
+             query = "SELECT * FROM produto p  ORDER BY "+ordem;
+        else
+             query = "SELECT * FROM produto p where idCategoria="+cat+" ORDER BY "+ordem;// nome ASC;  nome DESC; valor ASC; valor DESC;
+             
+        List<Produto> lista = new ArrayList<>();
+            try {
+                con = ConnectionFactory.getConnection();
+                ptmt = con.prepareStatement(query);
+                resultSet= ptmt.executeQuery();
+                
+                while(resultSet.next()){  //idProduto, idCategoria, nome, descricao, valor, quantidade, status
+                    Produto p = new Produto();  
+                    Categoria c=new Categoria();
+                    c.setIdCategoria(resultSet.getInt("idcategoria"));
+                    
+                    p.setCategoria(c); 
+                   
+                    p.setNome(resultSet.getString("nome"));  
+                    p.setDescricao(resultSet.getString("descricao"));
+                    p.setValor(resultSet.getFloat("valor"));
+                    p.setQuantidade(resultSet.getInt("quantidade"));
+                    p.setStatus(resultSet.getInt("status"));
+                    
+                    
+                  
+                    p.setImagem(resultSet.getString("imagem"));
+
+                    
                     lista.add(p);  
                 }  
             }finally {       

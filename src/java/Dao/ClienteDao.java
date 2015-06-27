@@ -1,7 +1,6 @@
 package Dao;
 
 
-import Dao.ConnectionFactory;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;

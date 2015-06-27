@@ -12,7 +12,7 @@
         <li class="divider"></li>
         <li><a href="redir_loja.jsp" class="nav">Nossa Loja</a></li>
         <li class="divider"></li>
-        <li><a href="redirect_prod.jsp" class="nav">Produtos</a></li>
+        <li><a href="servletProduto?action=pagina" formmethod="post" class="nav">Produtos</a></li>
         <li class="divider"></li>
         <li><a href="redir_busca.jsp" class="nav">Busca Clientes</a></li>
         <li class="divider"></li>
@@ -23,9 +23,6 @@
          <li><a href="redir_editorFunc.jsp" class="nav">Editar Funcionários</a></li>
         <li class="divider"></li>
          <li><a href="redir_relatorios.jsp" class="nav">Relatórios</a></li>
-        <li class="divider"></li>      
-        
-        <li><a href="#" class="nav">Ajuda</a></li>
-        <li class="divider"></li>
+       
       </ul>
    

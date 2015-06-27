@@ -11,7 +11,7 @@
     <form action="servletProduto?action=listaprod" method="POST" onsubmit="return validacadastroentrada(this);" >  
         <h2>Categoria: 
 
-            <SELECT NAME = "cat" id="cat">
+            <SELECT NAME = "cat">
                 <option value="todos" selected>Todas Categorias</option>
                 <c:forEach var="l" items="${lista}">
                     <option value="${l.idCategoria}"><c:out value="${l.nome}"/></option></br>
@@ -19,7 +19,7 @@
             </SELECT></h2>
         <h2>Ordernar por: 
 
-            <SELECT NAME = "ordem" id="ordem">
+            <SELECT NAME = "ordem">
                 <OPTION value="nome ASC;">ordem alfabética ascendente
                 <OPTION value="nome DESC; ">ordem alfabética descendente
                 <OPTION value="valor DESC;">preço descendente

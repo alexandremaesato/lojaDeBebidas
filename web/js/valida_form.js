@@ -1,4 +1,4 @@
-﻿	function validate_form(formulario) {
+	function validate_form(formulario) {
     if (formulario.nome.value == "")
     {
         alert("Campo nome Obrigatório!");
