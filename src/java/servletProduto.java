@@ -5,6 +5,7 @@
  */
 
 import Dao.DaoCategoria;
+import Dao.DaoImagem;
 import Dao.DaoProduto;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +15,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -27,6 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import pacote.Categoria;
+import pacote.Cliente;
+import pacote.Imagem;
 import pacote.Produto;
 
 /**
@@ -50,105 +57,133 @@ public class servletProduto extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
-
+        HttpSession session = request.getSession();
+        Cliente cliente = (Cliente) session.getAttribute("cliente");
         if ("pagina".equals(action)) {
             /* TODO output your page here. You may use following sample code. */
             DaoCategoria catd = new DaoCategoria();
             Categoria c = new Categoria();
+            
             try {
                 request.setAttribute("lista", catd.buscaLista());//lista categorias
                 // c=catd.buscaLista().get(0);
             } catch (SQLException ex) {
                 Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
-
             }
-            HttpSession session = request.getSession();
-            session.setAttribute("redir", "produtos");
+            
+            session.setAttribute("redir", "");
             //out.println(c.getNome());
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/servletProduto?action=carregarProdutos");
             //  <c:set var="redir" value="cadastroprod" scope="session" />  
             rd.forward(request, response);
         }
-        if ("listaprod".equals(action)){
-          try (PrintWriter out = response.getWriter()) {
 
-            DaoProduto dp=new DaoProduto();
-           // dp.busca(request.getParameter("cat"), request.getParameter("ordem"));
-           // DaoCategoria catd = new DaoCategoria();
-           Categoria c=new Categoria();
-            
-             request.setAttribute("produtos", dp.busca(request.getParameter("cat"), request.getParameter("ordem")));
-            //  request.setAttribute("lista", catd.buscaLista());
-             
-              out.println(request.getParameter("cat"));
-            out.print(request.getParameter("ordem"));
-                        
-              HttpSession session = request.getSession();
-            session.setAttribute("redir", "produtos");
-             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-          //  <c:set var="redir" value="cadastroprod" scope="session" />  
-            rd.forward(request, response);  
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-            
+        if ("listaprod".equals(action)) {
+            try (PrintWriter out = response.getWriter()) {
+
+                DaoProduto dp = new DaoProduto();
+                Produto produto = new Produto();
+                cliente = (Cliente)session.getAttribute("cliente");
+                // dp.busca(request.getParameter("cat"), request.getParameter("ordem"));
+                // DaoCategoria catd = new DaoCategoria();
+                Categoria c = new Categoria();
+
+                out.println(request.getParameter("cat"));
+                out.print(request.getParameter("ordem"));
+                session.setAttribute("redir", "produtos");
+                if(cliente.getCpf() != null){
+                    out.println("ifff");
+                    List<Produto> produtos = new ArrayList();
+                    String cat = request.getParameter("cat");
+                    String ordem = request.getParameter("ordem");
+                    
+                    produtos =  dp.getTodosMenosCliente(cliente, cat, ordem);
+                    
+                    session.setAttribute("produtos", produtos);
+                }else{  
+                    
+                    session.setAttribute("produtos", dp.busca(request.getParameter("cat"), request.getParameter("ordem")));
+                }
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+                //  <c:set var="redir" value="cadastroprod" scope="session" />  
+                rd.forward(request, response);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
-        if ("cadastrap".equals(action)){
+        if ("cadastrap".equals(action)) {
             try (PrintWriter out = response.getWriter()) {
-            Produto p = new Produto();
-            Categoria c=new Categoria();
-            int id=Integer.valueOf(request.getParameter("cat"));
-            c.setIdCategoria(id);
-            c.setStatus(1);
-            //c.setNome(request.getParameter("cat"));VERRRRRRRRRRRRRRRRRRRRRRRRRR
-            p.setNome((String)request.getParameter("produto"));
-            p.setCategoria(c);
-            p.setDescricao((String)request.getParameter("descr"));
-            p.setValor(Float.valueOf(request.getParameter("valor")));
-            p.setQuantidade(Integer.valueOf(request.getParameter("qtd")));
-            p.setStatus(1);
+                out.println("teste");
+                Produto p = new Produto();
+                Categoria c = new Categoria();
+                int id = Integer.valueOf(request.getParameter("cat"));
 
-            //--------------------UPLOAD IMAGEM----------------------
-            final String path = request.getParameter("destino");
-            final Part filePart = request.getPart("arq");
-            final String fileName = getFileName(filePart);
+                float valor;
+                c.setIdCategoria(id);
+                c.setStatus(1);
+                //c.setNome(request.getParameter("cat"));VERRRRRRRRRRRRRRRRRRRRRRRRRR
+                p.setNome((String) request.getParameter("produto"));
+                p.setCategoria(c);
+                p.setDescricao((String) request.getParameter("descr"));
 
-            OutputStream outp = null;
-            InputStream filecontent = null;
-            final PrintWriter writer = response.getWriter();
+                valor = parseFloat(request.getParameter("valor"));
 
-            try {
-                outp = new FileOutputStream(new File(path + File.separator
-                        + fileName));
-                filecontent = filePart.getInputStream();
+                p.setValor(valor);
 
-                int read = 0;
-                final byte[] bytes = new byte[1024];
+                p.setQuantidade(Integer.valueOf(request.getParameter("qtd")));
+                p.setStatus(1);
 
-                while ((read = filecontent.read(bytes)) != -1) {
-                    outp.write(bytes, 0, read);
-                }
-              // String s=path+"\\"+fileName;
-                String s="images/"+fileName;
-                
-                p.setImagem(s);
-                out.println(p.getCategoria().getIdCategoria());
-                 out.println(p.getNome());
-                 out.println(p.getDescricao());out.println(p.getValor());out.println(p.getQuantidade());
-                 out.println(p.getStatus());
-                 out.println(p.getImagem());
-                 DaoProduto daoprod= new DaoProduto();
-                 int idp=daoprod.add(p); 
-               // out.println(request.getParameter("id"));
-                        
-               
+                //--------------------UPLOAD IMAGEM----------------------
+                final String path = request.getParameter("destino");
+                final Part filePart = request.getPart("arq");
+                final String fileName = getFileName(filePart);
 
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-                rd.forward(request,response);
-                  //  LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", 
-                      //      new Object[]{fileName, path});
+                OutputStream outp = null;
+                InputStream filecontent = null;
+                final PrintWriter writer = response.getWriter();
+
+                try {
+                    outp = new FileOutputStream(new File(path + File.separator
+                            + fileName));
+                    filecontent = filePart.getInputStream();
+
+                    int read = 0;
+                    final byte[] bytes = new byte[1024];
+
+                    while ((read = filecontent.read(bytes)) != -1) {
+                        outp.write(bytes, 0, read);
+                    }
+                    // String s=path+"\\"+fileName;
+                    String s = "images/" + fileName;
+
+                    p.setImagem(s);
+                    out.println("idCategoria:" + p.getCategoria().getIdCategoria() + "</br>");
+                    out.println("Nome:" + p.getNome() + "</br>");
+                    out.println("Descricao:" + p.getDescricao());
+                    out.println("Valor:" + p.getValor() + "</br>");
+                    out.println("Quantidade:" + p.getQuantidade() + "</br>");
+                    out.println("Status:" + p.getStatus() + "</br>");
+                    out.println("Imagem:" + p.getImagem() + "</br>");
+
+                    DaoProduto daoprod = new DaoProduto();
+                    out.println("DAO:" + daoprod.add(p));
+                    int idp = daoprod.add(p);
+
+                    // out.println(request.getParameter("id"));
+                    Imagem im = new Imagem();
+                    im.setFoto(s);
+                    im.setIdProduto(idp);
+
+                    DaoImagem daoi = new DaoImagem();
+                    daoi.add(im);
+
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/servletIndex");
+                    rd.forward(request, response);
+                    //  LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", 
+                    //      new Object[]{fileName, path});
                 } catch (FileNotFoundException fne) {
                     writer.println("You either did not specify a file to upload or are "
                             + "trying to upload a file to a protected or nonexistent "
@@ -157,6 +192,8 @@ public class servletProduto extends HttpServlet {
 
                     //LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", 
                     //        new Object[]{fne.getMessage()});
+                } catch (SQLException ex) {
+                    Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     if (outp != null) {
                         outp.close();
@@ -168,8 +205,58 @@ public class servletProduto extends HttpServlet {
                         writer.close();
                     }
                 }
-            } 
-        } 
+            }
+        }
+
+        if ("visualizarProduto".equals(action)) {
+            try (PrintWriter out = response.getWriter()) {
+                Produto produto = new Produto();
+                DaoProduto daoProduto = new DaoProduto();
+                
+                //out.println(request.getParameter("id"));
+                produto = daoProduto.getProduto(parseInt(request.getParameter("id")));
+                //out.println(produto.getNome());
+
+                session.setAttribute("produto", produto);
+                session.setAttribute("redir", "visualizarProduto");
+                
+                //Adiciona no LOG os produtos visualizados
+                if(Objects.isNull(cliente.getNome())){
+                    daoProduto.adicionaLog(produto);
+                }else{
+                    daoProduto.adicionaLog(cliente, produto);
+                }
+                
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+                rd.forward(request, response);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if ("carregarProdutos".equals(action)) {
+            try {
+
+                DaoProduto daoProduto = new DaoProduto();
+                DaoCategoria daoCategoria = new DaoCategoria();
+
+                cliente = (Cliente) session.getAttribute("cliente");
+                session.setAttribute("lista", daoCategoria.buscaLista());
+
+                if (Objects.isNull(cliente.getNome())) {
+                    session.setAttribute("produtos", daoProduto.getProdutos());
+                } else {
+                    session.setAttribute("produtos", daoProduto.getTodosMenosCliente(cliente));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        }
+        
     }
 
     private String getFileName(final Part part) {

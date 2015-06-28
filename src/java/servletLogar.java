@@ -49,6 +49,7 @@ public class servletLogar extends HttpServlet {
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
+        Cliente cliente = new Cliente();
 
         if ("logar".equals(action)) {
             try (PrintWriter out = response.getWriter()) {
@@ -57,7 +58,7 @@ public class servletLogar extends HttpServlet {
                 CidadeDao cidadeDao = new CidadeDao();
                 ClienteDao clienteDao = new ClienteDao();
                 Dao.CarrinhoDao carrinhoDao = new Dao.CarrinhoDao();
-                Cliente cliente = new Cliente();
+                
                 Cliente clienteLogin = new Cliente();
 
                 String login = request.getParameter("login");
@@ -87,7 +88,7 @@ public class servletLogar extends HttpServlet {
                         session.setAttribute("tipo", 1);// linha de teste
 
                         session.setAttribute("cidades", cidadeDao.getCidades());
-                        RequestDispatcher rd = request.getRequestDispatcher("servletProduto?action=pagina");
+                        RequestDispatcher rd = request.getRequestDispatcher("servletProduto?action=carregarProdutos");
                         rd.forward(request,response);
                         out.flush();
                     } catch (Exception e) {
@@ -150,7 +151,7 @@ public class servletLogar extends HttpServlet {
         if ("deslogar".equals(action)) {
 
             ClienteDao clienteDao = new ClienteDao();
-            Cliente cliente = new Cliente();
+            
             cliente = clienteDao.getCliente(request.getParameter("login"));
             session = request.getSession();
             DataLogDao datalogDao = new DataLogDao();
@@ -174,7 +175,7 @@ public class servletLogar extends HttpServlet {
         if ("gravar".equals(action)) {
             try (PrintWriter out = response.getWriter()) {
 
-                Cliente cliente = new Cliente();
+                
                 CidadeDao cidadeDao = new CidadeDao();
                 Cidade cidade = new Cidade();
                 Dao.CarrinhoDao carrinhoDao = new Dao.CarrinhoDao();
@@ -228,14 +229,8 @@ public class servletLogar extends HttpServlet {
 
         }
         
-        if ("carregarProdutos".equals(action)) {
             
-            DaoCategoria daoCategoria = new DaoCategoria();
-            session.setAttribute("lista", daoCategoria.buscaLista());
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
         }
-    }
 
     public void processaErro(HttpServletRequest request, HttpServletResponse response, String erro) {
         try {

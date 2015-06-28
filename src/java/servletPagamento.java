@@ -79,6 +79,7 @@ public class servletPagamento extends HttpServlet {
                     venda.setDataEnvio(new java.sql.Date(System.currentTimeMillis()));
                     venda.setEnviado(false);
                     venda.setFormaDeEnvio(request.getParameter("formaDeEnvio"));
+                    venda.setFormaDePagamento(request.getParameter("forma"));
                     venda.setDataPagamento(new java.sql.Date(System.currentTimeMillis()));
                     venda.setIdCarrinho(cliente.getCarrinho().getIdCarrinho());
                     venda.setIdEndereco(endereco.getIdEndereco());
@@ -86,7 +87,7 @@ public class servletPagamento extends HttpServlet {
                     venda.setValor(cliente.getCarrinho().getTotal());
                     
                     vendaDao.novaVenda(venda);
-                    processaMensagem(request, response, "Deu certo");
+                    processaMensagem(request, response, "Pagamento efetuado com sucesso!</br>Logo estaremos enviando.");
 
                 }
             } catch (Exception e) {
@@ -145,7 +146,6 @@ public class servletPagamento extends HttpServlet {
     public void processaMensagem(HttpServletRequest request, HttpServletResponse response, String mensagem) {
         try {
             request.setAttribute("mensagem", mensagem);
-            //RequestDispatcher rd = request.getRequestDispatcher("erro.jsp");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/mensagem.jsp");
 
             rd.forward(request, response);

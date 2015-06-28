@@ -14,6 +14,7 @@
 
     <body>
         <c:if test="${sessionScope.lista eq null}">
+            <c:redirect url="servletProduto?action=carregarProdutos"/>
         </c:if>
         <div id="main_container">
             <c:import url="header.jsp" />
@@ -87,8 +88,12 @@
                         <c:import url="pagamento.jsp" />
                     </c:when>
 
+                    <c:when test="${sessionScope.redir eq 'visualizarProduto'}">
+                        <c:import url="visualizarProduto.jsp" />
+                    </c:when>
+
                     <c:otherwise>
-                        <c:import url="centerContent.jsp" />
+                        <c:import url="produtos.jsp" />
                     </c:otherwise>
 
 

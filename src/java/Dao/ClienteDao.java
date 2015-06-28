@@ -190,7 +190,7 @@ public class ClienteDao {
                 
                 while(resultSet.next()){  //idCliente,idEndereco,login, senha, nome, cpf,dataNascimento, Sexo,email, telefone, celular,status
                     Cliente f = new Cliente();
-                    //f.setLogin(resultSet.getString("login"));
+                    f.setLogin(resultSet.getString("login"));
                    // f.setSenha(resultSet.getString("senha"));
                     f.setNome(resultSet.getString("nome"));
                     f.setCpf(resultSet.getString("cpf"));

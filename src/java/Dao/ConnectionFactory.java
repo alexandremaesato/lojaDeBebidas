@@ -29,7 +29,7 @@ public class ConnectionFactory {
     private Connection createConnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/lojadebebidas2?useUnicode=true&characterEncoding=UTF-8", "root", "@36");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/lojadebebidas?useUnicode=true&characterEncoding=UTF-8", "root", "");
         } catch (SQLException e) {
             System.out.println("ERROR: Unable to Connect to Database.");
         }

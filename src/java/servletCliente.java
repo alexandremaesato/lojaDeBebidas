@@ -8,6 +8,8 @@ import Dao.ClienteDao;
 import Dao.DaoCliente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -104,20 +106,34 @@ public class servletCliente extends HttpServlet {
                 List<ProdutosCarrinho> lista = new ArrayList<>();
                 ClienteDao dc=new ClienteDao();
                 Cliente c=new Cliente();
-                c.setIdCliente(Integer.valueOf(request.getParameter("t")));
+               //out.println(request.getParameter("t"));
+                
+            try {
+                c = dc.getCliente((String)request.getParameter("login"));
+                 
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(servletCliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(servletCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            out.println(c);
+            
+                //c.setIdCliente(Integer.valueOf(request.getParameter("t")));
                 //out.print(request.getParameter("t"));
                     try {
                         lista=dc.buscaCompras(c);
+                        out.print(lista);
                     } catch (SQLException ex) {
                         Logger.getLogger(servletCliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     if(!lista.isEmpty())
                     out.print(lista.get(0).getNome());
+                    
                  HttpSession session = request.getSession();
                 session.setAttribute("listacompras",lista );
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);  
-
+                
             }
 
     }

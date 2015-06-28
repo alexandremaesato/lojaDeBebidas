@@ -8,4 +8,4 @@
 <!DOCTYPE html>
 <c:set var="redir" value="home" scope="session" />    
 <!redireciona p index!!!>
-<c:redirect url="/index.jsp"/>
+<c:redirect url="servletProduto?action=listaprod"/>

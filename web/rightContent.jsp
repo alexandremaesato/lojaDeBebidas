@@ -15,5 +15,5 @@
             <c:import url="carrinho.jsp" />
             
         </c:if>
-      <div class="banner_adds"> <a href="#"><img src="images/bann1.jpg" alt="" border="0" /></a> </div>
+      
     </div>

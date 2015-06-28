@@ -21,10 +21,10 @@
                 
                     <div class="prod_box_big">
                         <div class="center_prod_box_big">
-                            <div class="contact_form">
+                            <div class="tablePagamento">
                                 <h1>Dados Cadastrais</h1>
-                                <form action="servletPagamento?action=pagar" method="POST" onsubmit="return validate_form(this);" >
-                                <table class="tableCompra">
+                                <form class="tablePagamento" action="servletPagamento?action=pagar" method="POST" onsubmit="return validate_form(this);" >
+                                <table class="tableCompra">                                    
                                     <tr><td>Nome: <td>${cliente.nome}</td></td></tr>
                                     <tr><td>Data Nascimento: <td>${cliente.dataNascimento}</td></tr>
                                     <tr><td>Sexo:<td>${cliente.sexo}</td></tr>
@@ -44,7 +44,7 @@
                                 </br>
                                 <h1>Endereco de Entrega</h1>
                                 <h3><td><tr>Endereco de entrega o mesmo do Cadastro</tr><tr><input id="checar" type="checkbox" checked="false"  onclick="alteraCampos();"</tr></td></br></h3>
-                                    <table class="tableCompra">
+                                    <table class="tablePagamento">
                                            
 
 
@@ -63,12 +63,27 @@
 
                                             <tr><td></br><td></td></td></tr>
                                     </table>
-                                <input type="submit" value="Pagar"/>
+                                <table class="tableCompra tablePagamento">
+                                    <h1>Forma de Pagamento</h1>
+                                    <tr><td><img src="images/cartao.gif" class="oferta_img" value="cartao"></br>
+                                                Cartao</br>
+                                                <input type="radio" id="forma" name="forma" value="cartao">
+                                        </td>
+                                        <td><img src="images/dinheiro.jpg" class="oferta_img"></br>
+                                                Dinheiro</br>
+                                                <input type="radio" checked="true" id="forma" name="forma" value="dinheiro">
+                                        </td>
+                                    </tr>
+                                    
+                                </table>
+                                
                                     
 
                                     <div class="" id="stotal">Taxa de Entrega: <fmt:formatNumber value="10" type="currency"/></div>
                                     <div class="valorTotal" id="total">Valor Total: <fmt:formatNumber value="${carrinho.total+5}" type="currency"/></div>
-                                    <div><input class="botao" formmethod="post" formaction="" type="submit" value="Pagar"></div>
+                                    <div class="tableCompra">
+                                <input class="botao" type="submit" value="Pagar"/>
+                                </div>
                                     </form>
                             </div>
                         </div>

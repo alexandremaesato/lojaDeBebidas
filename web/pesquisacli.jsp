@@ -26,7 +26,7 @@
                                                     <td>  ${l.cpf}</td>  <td>  </td> 
                                                     <td> ${l.nome}<input type="hidden"  name="nome" value="${l.nome}"></td>  <td>  </td> 
                                                     <td> ${l.email}<input type="hidden"  name="mail" value="${l.email}"></td> 
-                                                     <td> ${l.login}<input type="hidden"  name="login" value="${l.login}"></td> 
+                                                     <td> ${l.login}<input type="hidden" id="login"  name="login" value="${l.login}"></td> 
                                                 </tr>
                                             </c:forEach>
                                         </table>

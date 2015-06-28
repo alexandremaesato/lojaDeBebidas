@@ -6,8 +6,15 @@
 
 import Dao.CarrinhoDao;
 import Dao.ClienteDao;
+import Dao.DaoProduto;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +26,7 @@ import static javax.xml.bind.DatatypeConverter.parseInt;
 import static javax.xml.bind.DatatypeConverter.parseLong;
 import pacote.Carrinho;
 import pacote.Cliente;
+import pacote.Produto;
 
 /**
  *
@@ -39,12 +47,17 @@ public class servletCarrinho extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String action = request.getParameter("action");
+        HttpSession sessao = request.getSession();
             CarrinhoDao carrinhoDao = new CarrinhoDao();
+        DaoProduto produtoDao = new DaoProduto();
             ClienteDao clienteDao = new ClienteDao();
             Carrinho carrinho = new Carrinho();
-            HttpSession sessao = request.getSession();
+        Produto produto = new Produto();
+        Cliente cliente = new Cliente();
+        try (PrintWriter out = response.getWriter()) {
+            String action = request.getParameter("action");
+            
+            
             carrinho = (Carrinho) sessao.getAttribute("carrinho");
             
             if("alterar".equals(action)){
@@ -77,7 +90,30 @@ public class servletCarrinho extends HttpServlet {
                 sessao.setAttribute("carrinho", carrinhoDao.getCarrinho((Cliente) sessao.getAttribute("cliente")));
                 out.println("2");
             }
+            if ("addNoCarrinho".equals(action)) {
+                if (!Objects.isNull(cliente.getNome())) {
+                    produto = produtoDao.getProduto(parseInt(request.getParameter("id")));
+                    carrinho = (Carrinho) sessao.getAttribute("carrinho");
+                    out.println("Cliente: ");
+                    cliente = (Cliente) sessao.getAttribute("cliente");
+                    out.println(cliente);
+                    carrinhoDao.adicionarItemCarrinho(produto, carrinho);
+                    carrinho = carrinhoDao.getCarrinho(cliente);
+
+                    sessao.setAttribute("carrinho", carrinho);
+                    sessao.setAttribute("redir", "produto");
+                    RequestDispatcher rd = request.getRequestDispatcher("/servletProduto?action=carregarProdutos");
+                    rd.forward(request, response);
+                }else{
+                    processaErro(request, response,"Voce precisa estar logado para ter acesso ao carrinho de compras");
+                }
+    
+                
         }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(servletCarrinho.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -119,4 +155,18 @@ public class servletCarrinho extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public void processaErro(HttpServletRequest request, HttpServletResponse response, String erro) {
+        try {
+            request.setAttribute("mensagem", erro);
+            //RequestDispatcher rd = request.getRequestDispatcher("erro.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/erro.jsp");
+
+            rd.forward(request, response);
+        } catch (ServletException ex) {
+            Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(servletLogar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

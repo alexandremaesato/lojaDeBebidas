@@ -25,6 +25,7 @@
     <div class="crumb_navigation"> Navigation: <span class="current">Home</span> </div>
     <div class="error_message">
         <h1>${mensagem}</h1></br>
+    <c:set var="redir" value="" scope="session" />  
     <a class="botao" href="index.jsp">Voltar</a>
     
     </div>

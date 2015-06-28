@@ -182,7 +182,29 @@ public class CarrinhoDao {
             try {
                 stmt.close();
             } catch (Exception ex) {
-            };
+            
         }
+    }
+}
+
+    public void adicionarItemCarrinho(Produto produto, Carrinho carrinho) {
+        String sql = "INSERT INTO produtoscarrinho(idProduto, idCarrinho,quantidade,valor) values(?,?,?,?)";
+        try {
+             stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, produto.getIdProduto());
+            stmt.setLong(2, carrinho.getIdCarrinho());
+            stmt.setInt(3, 1);
+            stmt.setFloat(4, produto.getValor());
+            stmt.execute();
+            
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) {
+            }
+        }
+        
     }
 }
