@@ -243,8 +243,9 @@ public class servletProduto extends HttpServlet {
 
                 cliente = (Cliente) session.getAttribute("cliente");
                 session.setAttribute("lista", daoCategoria.buscaLista());
-
-                if (Objects.isNull(cliente.getNome())) {
+                
+                
+                if (null == cliente) {
                     session.setAttribute("produtos", daoProduto.getProdutos());
                 } else {
                     session.setAttribute("produtos", daoProduto.getTodosMenosCliente(cliente));

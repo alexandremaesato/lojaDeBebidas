@@ -98,14 +98,14 @@ public class servletLogar extends HttpServlet {
                     else if (fd.verificaFunc(login, funcLogin.getSenha())) {
                     //Adiciona no LOG 
                     try {
-                           session.setAttribute("funcio", func);
-
+                        session.setAttribute("funcio", func);
+                        cliente = null;
                         //Coloca o Carrinho na Sessao
                        // session.setAttribute("carrinho", carrinhoDao.getCarrinho(cliente));
 
                         //session.setAttribute("nome", login);
                         session.setAttribute("tipo", func.getTipo());// linha de teste
-
+                        session.setAttribute("cliente", cliente);
                        // session.setAttribute("cidades", cidadeDao.getCidades());
                         RequestDispatcher rd = request.getRequestDispatcher("servletProduto?action=pagina");
             rd.forward(request,response);
@@ -155,8 +155,10 @@ public class servletLogar extends HttpServlet {
             cliente = clienteDao.getCliente(request.getParameter("login"));
             session = request.getSession();
             DataLogDao datalogDao = new DataLogDao();
+            
             datalogDao.setLogout(cliente);
             session.invalidate();
+            
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }
@@ -166,8 +168,9 @@ public class servletLogar extends HttpServlet {
             Funcionario f = new Funcionario();
             f = fDao.getFunc(request.getParameter("login"));
             session = request.getSession();
-           
+            //cliente = null;
             session.invalidate();
+            request.setAttribute("redir", "produtos");
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }

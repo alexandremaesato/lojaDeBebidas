@@ -14,6 +14,7 @@
     </head>
     <body>
         <h1>Sessao Finalizada</h1>
+        <c:set var="redir" value="pagina" scope="session" />
         <a href="index.jsp">Voltar</a>
     </body>
 </html>
