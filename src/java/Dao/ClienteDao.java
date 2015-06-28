@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import pacote.*;
 
 /*
@@ -24,7 +26,8 @@ import pacote.*;
 public class ClienteDao {
     private Connection connection = null;
     PreparedStatement stmt = null;
-    
+    	ResultSet resultSet = null;
+
     public ClienteDao(){
         this.connection = ConnectionFactory.getConnection();
     }
@@ -173,4 +176,84 @@ public class ClienteDao {
                 try{stmt.close();}catch (Exception ex){};
         }
     }
+    public List<Cliente> busca(String s,String tipo) throws SQLException {
+        String query;
+        if(tipo.equals("cpf"))
+             query = "SELECT * FROM cliente where cpf="+ s;
+        else//palavra
+             query = "SELECT * FROM cliente WHERE nome LIKE '%"+s+"%' OR email LIKE '%"+s+"%' or login LIKE '%"+s+"%'";
+        List<Cliente> lista = new ArrayList<>();
+            try {
+                connection = ConnectionFactory.getConnection();
+                stmt = connection.prepareStatement(query);
+                resultSet= stmt.executeQuery();
+                
+                while(resultSet.next()){  //idCliente,idEndereco,login, senha, nome, cpf,dataNascimento, Sexo,email, telefone, celular,status
+                    Cliente f = new Cliente();
+                    //f.setLogin(resultSet.getString("login"));
+                   // f.setSenha(resultSet.getString("senha"));
+                    f.setNome(resultSet.getString("nome"));
+                    f.setCpf(resultSet.getString("cpf"));
+                     f.setIdCliente(resultSet.getInt("idCliente"));
+                   // f.setCpf(resultSet.getString("dataNascimento"));
+                   // f.setSexo(resultSet.getString("sexo"));
+                    f.setEmail(resultSet.getString("email"));
+                   // f.setEmail(resultSet.getString("telefone"));
+                   // f.setEmail(resultSet.getString("celular"));
+                   // f.setEmail(resultSet.getString("status"));
+
+                    lista.add(f);  
+                }  
+            }finally {       
+            }
+                return lista;  
+            
+        } 
+    public List<Datalog> buscadatalog(Cliente s) throws SQLException {
+        String query = "SELECT * FROM Datalog where idCliente=?";
+
+        List<Datalog> lista = new ArrayList<>();
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, s.getIdCliente());
+            resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                Datalog f = new Datalog();
+                f.setDatalogin(resultSet.getTimestamp("dataLogin"));
+                f.setDatalogout(resultSet.getTimestamp("dataLogout"));
+                lista.add(f);
+            }
+        } finally {
+        }
+        return lista;
+
+    }
+     public List<ProdutosCarrinho> buscaCompras(Cliente s) throws SQLException {
+        String query = "select p.nome, p.valor, pc.quantidade, v.idvenda from carrinho c, produto p, venda v, produtoscarrinho "
+                + "pc where c.idcarrinho=pc.idcarrinho and p.idproduto=pc.idproduto and v.idcarrinho=c.idcarrinho and "
+                + "v.pago=1 and c.idCliente=?";
+
+        List<ProdutosCarrinho> lista = new ArrayList<>();
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, s.getIdCliente());
+            resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                ProdutosCarrinho f = new ProdutosCarrinho();
+                f.setIdvenda(resultSet.getInt("idvenda"));
+                f.setNome(resultSet.getString("nome"));
+                f.setQuantidade(resultSet.getInt("quantidade"));
+                f.setValor(resultSet.getFloat("valor"));
+                lista.add(f);
+            }
+        } finally {
+        }
+        return lista;
+
+    }
+ 
 }

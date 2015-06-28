@@ -18,7 +18,26 @@ public class ProdutosCarrinho implements Serializable {
     private Produto produto;
     private int quantidade;
     private float valor;
+     private int idvenda;
+      private String nome;
 
+    public int getIdvenda() {
+        return idvenda;
+    }
+
+    public void setIdvenda(int idvenda) {
+        this.idvenda = idvenda;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+      
     public ProdutosCarrinho() {
     }
 
