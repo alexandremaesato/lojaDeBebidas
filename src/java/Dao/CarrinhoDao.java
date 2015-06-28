@@ -63,7 +63,7 @@ public class CarrinhoDao {
     }
 
     public Carrinho getCarrinho(Cliente cliente) {
-        String sql = "select * from carrinho where idCliente=?";
+        String sql = "select * from carrinho where idCliente=? order by dataPedido Desc limit 1";
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setLong(1, cliente.getIdCliente());

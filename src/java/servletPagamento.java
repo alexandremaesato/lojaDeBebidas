@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import Dao.CarrinhoDao;
 import Dao.ClienteDao;
 import Dao.VendaDao;
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class servletPagamento extends HttpServlet {
                     EnderecoDao enderecoDao = new EnderecoDao();
                     Venda venda = new Venda();
                     Endereco endereco = new Endereco();
+                    CarrinhoDao carrinhoDao = new CarrinhoDao();
 
                     if ("teste".equals(check)) {
                         CidadeDao cidadeDao = new CidadeDao();
@@ -87,6 +89,9 @@ public class servletPagamento extends HttpServlet {
                     venda.setValor(cliente.getCarrinho().getTotal());
                     
                     vendaDao.novaVenda(venda);
+                    
+                    carrinhoDao.novoCarrinho(cliente);
+                    
                     processaMensagem(request, response, "Pagamento efetuado com sucesso!</br>Logo estaremos enviando.");
 
                 }
