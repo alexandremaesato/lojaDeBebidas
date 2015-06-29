@@ -105,6 +105,7 @@ public class DaoProduto {
                 lista.add(p);
             }
         } finally {
+            ptmt.close();
         }
         return lista;
 
@@ -135,6 +136,7 @@ public class DaoProduto {
                 return p;
             }
         } finally {
+            ptmt.close();
         }
         return null;
 
@@ -164,6 +166,7 @@ public class DaoProduto {
                 lista.add(p);
             }
         } finally {
+            ptmt.close();
         }
         return lista;
 
@@ -197,6 +200,7 @@ public class DaoProduto {
                 lista.add(p);
             }
         } finally {
+            ptmt.close();
         }
         return lista;
     }
@@ -243,6 +247,7 @@ public class DaoProduto {
                 lista.add(p);
             }
         } finally {
+            ptmt.close();
         }
         return lista;
     }

@@ -62,8 +62,8 @@ public class servletProduto extends HttpServlet {
         if ("pagina".equals(action)) {
             /* TODO output your page here. You may use following sample code. */
             DaoCategoria catd = new DaoCategoria();
-            Categoria c = new Categoria();
-            
+            //Categoria c = new Categoria();
+                
             try {
                 request.setAttribute("lista", catd.buscaLista());//lista categorias
                 // c=catd.buscaLista().get(0);
@@ -169,7 +169,7 @@ public class servletProduto extends HttpServlet {
                     out.println("Imagem:" + p.getImagem() + "</br>");
 
                     DaoProduto daoprod = new DaoProduto();
-                    out.println("DAO:" + daoprod.add(p));
+                    //out.println("DAO:" + daoprod.add(p));
                     int idp = daoprod.add(p);
 
                     // out.println(request.getParameter("id"));
@@ -239,19 +239,20 @@ public class servletProduto extends HttpServlet {
             try {
 
                 DaoProduto daoProduto = new DaoProduto();
-                DaoCategoria daoCategoria = new DaoCategoria();
+                    DaoCategoria daoCategoria = new DaoCategoria();
 
-                cliente = (Cliente) session.getAttribute("cliente");
+                //cliente = (Cliente) session.getAttribute("cliente");
                 session.setAttribute("lista", daoCategoria.buscaLista());
                 
                 
-                if (null == cliente) {
+                if (null == session.getAttribute("cliente")) {
                     session.setAttribute("produtos", daoProduto.getProdutos());
                 } else {
                     session.setAttribute("produtos", daoProduto.getTodosMenosCliente(cliente));
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(servletProduto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
             }
 
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");

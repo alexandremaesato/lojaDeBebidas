@@ -64,7 +64,10 @@ public class servletLogar extends HttpServlet {
                 String login = request.getParameter("login");
                 clienteLogin.setSenha(request.getParameter("senha"));
                 cliente = clienteDao.getCliente(login);
-                cliente.setCarrinho(carrinhoDao.getCarrinho(cliente));
+                
+                if(cliente!=null){
+                    cliente.setCarrinho(carrinhoDao.getCarrinho(cliente));
+                }
 
                 FuncionarioDao fd=new FuncionarioDao();
                 Funcionario funcLogin=new Funcionario();
@@ -80,6 +83,7 @@ public class servletLogar extends HttpServlet {
 
                         //Coloca o Cliente na Sessao
                         session.setAttribute("cliente", cliente);
+                        session.setMaxInactiveInterval(-1);
 
                         //Coloca o Carrinho na Sessao
                         session.setAttribute("carrinho", carrinhoDao.getCarrinho(cliente));
@@ -158,7 +162,9 @@ public class servletLogar extends HttpServlet {
             
             datalogDao.setLogout(cliente);
             session.invalidate();
-            
+            session = null;
+            cliente = null;
+            request.setAttribute("redir", "produtos");
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }

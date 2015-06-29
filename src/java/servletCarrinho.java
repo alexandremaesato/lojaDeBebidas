@@ -53,7 +53,8 @@ public class servletCarrinho extends HttpServlet {
             ClienteDao clienteDao = new ClienteDao();
             Carrinho carrinho = new Carrinho();
         Produto produto = new Produto();
-        Cliente cliente = new Cliente();
+        Cliente cliente;
+        
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
             
@@ -91,11 +92,12 @@ public class servletCarrinho extends HttpServlet {
                 out.println("2");
             }
             if ("addNoCarrinho".equals(action)) {
+                cliente = (Cliente) sessao.getAttribute("cliente");
                 if (!Objects.isNull(cliente.getNome())) {
                     produto = produtoDao.getProduto(parseInt(request.getParameter("id")));
                     carrinho = (Carrinho) sessao.getAttribute("carrinho");
                     out.println("Cliente: ");
-                    cliente = (Cliente) sessao.getAttribute("cliente");
+                    
                     out.println(cliente);
                     carrinhoDao.adicionarItemCarrinho(produto, carrinho);
                     carrinho = carrinhoDao.getCarrinho(cliente);

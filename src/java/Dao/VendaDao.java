@@ -10,8 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import pacote.Carrinho;
+import pacote.Cliente;
 import pacote.Endereco;
 import pacote.Venda;
 
@@ -44,6 +46,44 @@ public class VendaDao {
             stmt.setBoolean(7, false);
             stmt.setDate(8, (Date) venda.getDataEnvio());
             stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+            
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception ex) { 
+            };
+        }
+    }
+
+    public List<Venda> getVendas(Carrinho carrinho) {
+        String sql ="select * from venda where idCarrinho = ? and pago=1";
+         try {
+            // prepared statement para inserção
+            stmt = connection.prepareStatement(sql);
+            List<Venda> vendas = new ArrayList();
+            EnderecoDao enderecoDao = new EnderecoDao();
+            // seta os valores
+            stmt.setLong(1, carrinho.getIdCarrinho());
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                Venda venda = new Venda();
+                venda.setDataEnvio(rs.getTimestamp("dataEnvio"));
+                venda.setDataPagamento(rs.getTimestamp("dataPagamento"));
+                venda.setEndereco(enderecoDao.getEndereco(rs.getLong("idEndereco")));
+                venda.setEnviado(rs.getBoolean("Enviado"));
+                venda.setFormaDeEnvio(rs.getString("formaDeEnvio"));
+                venda.setFormaDePagamento(rs.getString("formaDePagamento"));
+                venda.setIdCarrinho(rs.getLong("idCarrinho"));
+                venda.setIdEndereco(rs.getLong("idEndereco"));
+                venda.setIdVenda(rs.getLong("idVenda"));
+                venda.setPago(rs.getBoolean("pago"));
+                venda.setValor(rs.getFloat("valor"));
+                vendas.add(venda);
+            }
+            return vendas;
         } catch (SQLException e) {
             throw new RuntimeException(e);
             

@@ -13,17 +13,17 @@ import java.util.Date;
  * @author Alexandre
  */
 public class Venda implements Serializable {
-    long idVenda;
-    long idCarrinho;
-    long idEndereco;
-    Endereco endereco;
-    String formaDeEnvio;
-    float valor;
-    boolean pago;
-    String formaDePagamento;
-    Date dataPagamento;
-    boolean enviado;
-    Date dataEnvio;
+    private long idVenda;
+    private long idCarrinho;
+    private long idEndereco;
+    private Endereco endereco;
+    private String formaDeEnvio;
+    private float valor;
+    private boolean pago;
+    private String formaDePagamento;
+    private Date dataPagamento;
+    private boolean enviado;
+    private Date dataEnvio;
 
     public Venda() {
     }

@@ -70,6 +70,7 @@ public class DaoCategoria {
                 lista.add(c);
             }
         } finally {
+            ptmt.close();
 
         }
         return lista;
@@ -95,6 +96,7 @@ public class DaoCategoria {
                 return null;
             }
         } finally {
+            ptmt.close();
         }
 
     }
