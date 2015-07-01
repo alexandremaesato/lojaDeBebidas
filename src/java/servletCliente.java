@@ -115,7 +115,7 @@ public class servletCliente extends HttpServlet {
                 try {
                 // Conexão com o banco
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas","root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas2","root", "@36");
                 // Caminho físico do relatório compilado
                 String jasper = request.getContextPath() + "/compras_cli.jasper";
                 // Host onde o servlet esta executando
@@ -219,7 +219,7 @@ public class servletCliente extends HttpServlet {
                 try {
                 // Conexão com o banco
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas","root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas2","root", "@36");
                 // Caminho físico do relatório compilado
                 String jasper = request.getContextPath() + "/5clientes.jasper";
                 // Host onde o servlet esta executando
@@ -302,7 +302,7 @@ public class servletCliente extends HttpServlet {
                 try {
                 // Conexão com o banco
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas","root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas2","root", "@36");
                 // Caminho físico do relatório compilado
                 String jasper = request.getContextPath() + "/produtosperiodo.jasper";
                 // Host onde o servlet esta executando
@@ -384,7 +384,7 @@ public class servletCliente extends HttpServlet {
                 try {
                 // Conexão com o banco
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas","root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lojadebebidas2","root", "@36");
                 // Caminho físico do relatório compilado
                 String jasper = request.getContextPath() + "/maisvendido.jasper";
                 // Host onde o servlet esta executando

@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <div class="center_content">
 <br />
+
 					<a href="GeradorRelatorioCli"> Relatório de Cliente</a>&nbsp;
 					<a href="redir_produtos.jsp"> Relatório de Produtos</a>&nbsp;
 					<a href="redir_faturamento.jsp"> Faturamento da loja</a>&nbsp;
